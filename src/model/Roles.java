@@ -4,5 +4,6 @@ public enum Roles {
 	 LIDER_PROYECTO,
 	 ARQUITECTO,
 	 PROGRAMADOR,
-	 TESTER
+	 TESTER,
+	 NISMAN
 }
