@@ -13,5 +13,21 @@ public class RequerimientoEquipo {
 		this.programadores = programadores;
 		this.testers = testers;
 	}
+
+	public int getLideresProyecto() {
+		return lideresProyecto;
+	}
+
+	public int getArquitectos() {
+		return arquitectos;
+	}
+
+	public int getProgramadores() {
+		return programadores;
+	}
+
+	public int getTesters() {
+		return testers;
+	}
 	
 }
