@@ -1,33 +1,16 @@
 package model;
 
+import java.util.Map;
+
 public class RequerimientoEquipo {
 
-	private int lideresProyecto;
-	private int arquitectos;
-	private int programadores;
-	private int testers;
+	Map<Roles, Integer> requirimientosEquipo;
 
-	public RequerimientoEquipo(int lideresProyecto, int arquitectos, int programadores, int testers) {
-		this.lideresProyecto = lideresProyecto;
-		this.arquitectos = arquitectos;
-		this.programadores = programadores;
-		this.testers = testers;
+	public RequerimientoEquipo(Map<Roles, Integer> requerimientosUsuario) {
+		this.requirimientosEquipo = requerimientosUsuario;
 	}
 
-	public int getLideresProyecto() {
-		return lideresProyecto;
+	public int getCantidadNecesaria(Roles rol) {
+		return this.getCantidadNecesaria(rol);
 	}
-
-	public int getArquitectos() {
-		return arquitectos;
-	}
-
-	public int getProgramadores() {
-		return programadores;
-	}
-
-	public int getTesters() {
-		return testers;
-	}
-	
 }
