@@ -34,7 +34,7 @@ public class Equipo {
 	public boolean cumpleRequerimientos(RequerimientoEquipo req) {
 		for (Roles rol : Roles.values()) {
 			if (this.roles.get(rol) != req.getCantidadNecesaria(rol)) {
-				return false;
+				return this.roles.get(rol) != req.getCantidadNecesaria(rol) && req.cantidadDeMiembros==miembros.size() ;
 			}
 		}
 		return true;
