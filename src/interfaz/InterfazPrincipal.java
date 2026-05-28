@@ -18,8 +18,9 @@ import javax.swing.ListModel;
 
 public class InterfazPrincipal {
 
-	private JFrame frame;
+	private JFrame frmEquipoPerfecto;
 	private JTextField nombreEquipoNuevo;
+	private JTextField informacionSolicitada;
 
 	/**
 	 * Launch the application.
@@ -29,7 +30,7 @@ public class InterfazPrincipal {
 			public void run() {
 				try {
 					InterfazPrincipal window = new InterfazPrincipal();
-					window.frame.setVisible(true);
+					window.frmEquipoPerfecto.setVisible(true);
 				} catch (Exception e) {
 					e.printStackTrace();
 				}
@@ -48,35 +49,47 @@ public class InterfazPrincipal {
 	 * Initialize the contents of the frame.
 	 */
 	private void initialize() {
-		frame = new JFrame();
-		frame.setBounds(100, 100, 787, 606);
-		frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-		frame.getContentPane().setLayout(null);
+		frmEquipoPerfecto = new JFrame();
+		frmEquipoPerfecto.setTitle("Equipo Perfecto");
+		frmEquipoPerfecto.setBounds(100, 100, 787, 606);
+		frmEquipoPerfecto.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+		frmEquipoPerfecto.getContentPane().setLayout(null);
+		
 		
 		
 		JButton visualizarDisponibles = new JButton("Crear Equipo");
-		visualizarDisponibles.setBounds(588, 318, 133, 45);
-		frame.getContentPane().add(visualizarDisponibles);
-		
-		JList listaEmpleadosDisponibles = new JList();
-		listaEmpleadosDisponibles.setBounds(10, 48, 155, 76);
-		frame.getContentPane().add(listaEmpleadosDisponibles);
+		visualizarDisponibles.setBounds(588, 129, 133, 45);
+		frmEquipoPerfecto.getContentPane().add(visualizarDisponibles);
 		
 		
 		
 		JSpinner requerimientoMinimoEquipo = new JSpinner();
-		requerimientoMinimoEquipo.setBounds(674, 141, 47, 26);
-		frame.getContentPane().add(requerimientoMinimoEquipo);
+		requerimientoMinimoEquipo.setBounds(674, 92, 47, 26);
+		frmEquipoPerfecto.getContentPane().add(requerimientoMinimoEquipo);
 		
 		nombreEquipoNuevo = new JTextField();
-		nombreEquipoNuevo.setBounds(635, 46, 86, 20);
-		frame.getContentPane().add(nombreEquipoNuevo);
+		nombreEquipoNuevo.setBounds(635, 53, 86, 20);
+		frmEquipoPerfecto.getContentPane().add(nombreEquipoNuevo);
 		nombreEquipoNuevo.setColumns(10);
 		
 		JButton detellesEmpleado = new JButton("Mostrar Detalles");
-		detellesEmpleado.setBounds(10, 278, 126, 20);
-		frame.getContentPane().add(detellesEmpleado);
+		detellesEmpleado.setBounds(209, 95, 126, 20);
+		frmEquipoPerfecto.getContentPane().add(detellesEmpleado);
 		
+		
+				JComboBox empleadosDisponibles = new JComboBox();
+		empleadosDisponibles.setBounds(209, 48, 126, 31);
+		frmEquipoPerfecto.getContentPane().add(empleadosDisponibles);
+		
+		JButton detallesEquipo = new JButton("Mostrar detalles \r\n\tdel equipo");
+		
+		detallesEquipo.setBounds(10, 278, 178, 45);
+		frmEquipoPerfecto.getContentPane().add(detallesEquipo);
+		
+		informacionSolicitada = new JTextField();
+		informacionSolicitada.setBounds(10, 371, 285, 167);
+		frmEquipoPerfecto.getContentPane().add(informacionSolicitada);
+		informacionSolicitada.setColumns(10);
 		
 		
 		
@@ -91,8 +104,10 @@ public class InterfazPrincipal {
 		}
 		
 		JList<String> listaEquiposCreados = new JList<>(nombre);
-		listaEquiposCreados.setBounds(239, 48, 155, 219);
-		frame.getContentPane().add(listaEquiposCreados);
+		listaEquiposCreados.setBounds(10, 48, 178, 219);
+		frmEquipoPerfecto.getContentPane().add(listaEquiposCreados);
+		
+
 		
 	}
 }
