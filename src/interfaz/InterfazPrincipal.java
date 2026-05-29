@@ -1,6 +1,8 @@
 package interfaz;
 
 import java.awt.EventQueue;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
 import java.util.ArrayList;
 import java.util.LinkedList;
 
@@ -15,22 +17,25 @@ import javax.swing.JButton;
 import javax.swing.JList;
 import javax.swing.JTextField;
 import javax.swing.ListModel;
+import javax.swing.event.ChangeEvent;
+import javax.swing.event.ChangeListener;
+import javax.swing.JPanel;
 
 public class InterfazPrincipal {
-
+	
 	private JFrame frmEquipoPerfecto;
 	private JTextField nombreEquipoNuevo;
 	private JTextField informacionSolicitada;
+	private ConstructorVisual visual;
 
-	/**
-	 * Launch the application.
-	 */
+	
 	public static void main(String[] args) {
 		EventQueue.invokeLater(new Runnable() {
 			public void run() {
 				try {
-					InterfazPrincipal window = new InterfazPrincipal();
-					window.frmEquipoPerfecto.setVisible(true);
+					ConstructorVisual mirar = new ConstructorVisual();
+					InterfazPrincipal window = new InterfazPrincipal(mirar);
+					window.visual.frame.setVisible(true);
 				} catch (Exception e) {
 					e.printStackTrace();
 				}
@@ -38,76 +43,33 @@ public class InterfazPrincipal {
 		});
 	}
 
-	/**
-	 * Create the application.
-	 */
-	public InterfazPrincipal() {
-		initialize();
+	public InterfazPrincipal(ConstructorVisual visual) {
+		this.visual = visual;
+		peneParaEventos();
 	}
 
-	/**
-	 * Initialize the contents of the frame.
-	 */
-	private void initialize() {
-		frmEquipoPerfecto = new JFrame();
-		frmEquipoPerfecto.setTitle("Equipo Perfecto");
-		frmEquipoPerfecto.setBounds(100, 100, 787, 606);
-		frmEquipoPerfecto.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-		frmEquipoPerfecto.getContentPane().setLayout(null);
-		
-		
-		
-		JButton visualizarDisponibles = new JButton("Crear Equipo");
-		visualizarDisponibles.setBounds(588, 129, 133, 45);
-		frmEquipoPerfecto.getContentPane().add(visualizarDisponibles);
-		
-		
-		
-		JSpinner requerimientoMinimoEquipo = new JSpinner();
-		requerimientoMinimoEquipo.setBounds(674, 92, 47, 26);
-		frmEquipoPerfecto.getContentPane().add(requerimientoMinimoEquipo);
-		
-		nombreEquipoNuevo = new JTextField();
-		nombreEquipoNuevo.setBounds(635, 53, 86, 20);
-		frmEquipoPerfecto.getContentPane().add(nombreEquipoNuevo);
-		nombreEquipoNuevo.setColumns(10);
-		
-		JButton detellesEmpleado = new JButton("Mostrar Detalles");
-		detellesEmpleado.setBounds(209, 95, 126, 20);
-		frmEquipoPerfecto.getContentPane().add(detellesEmpleado);
-		
-		
-				JComboBox empleadosDisponibles = new JComboBox();
-		empleadosDisponibles.setBounds(209, 48, 126, 31);
-		frmEquipoPerfecto.getContentPane().add(empleadosDisponibles);
-		
-		JButton detallesEquipo = new JButton("Mostrar detalles \r\n\tdel equipo");
-		
-		detallesEquipo.setBounds(10, 278, 178, 45);
-		frmEquipoPerfecto.getContentPane().add(detallesEquipo);
-		
-		informacionSolicitada = new JTextField();
-		informacionSolicitada.setBounds(10, 371, 285, 167);
-		frmEquipoPerfecto.getContentPane().add(informacionSolicitada);
-		informacionSolicitada.setColumns(10);
-		
-		
-		
-		
-		ArrayList<String> asd = new ArrayList<>();
-		asd.add("hola");asd.add("hola");asd.add("hola");asd.add("hola");asd.add("hola");asd.add("hola");asd.add("hola");
-		
-		
-		DefaultListModel<String> nombre = new DefaultListModel<>();
-		for(String s : asd) {
-			nombre.addElement(s);
-		}
-		
-		JList<String> listaEquiposCreados = new JList<>(nombre);
-		listaEquiposCreados.setBounds(10, 48, 178, 219);
-		frmEquipoPerfecto.getContentPane().add(listaEquiposCreados);
-		
 
+	public void peneParaEventos() {
 		
+	
+		visual.reqMinimoEquipo.addChangeListener(new ChangeListener() {
+			public void stateChanged(ChangeEvent e) {
+				spinnerValor(e); 	
+			}
+		}); 
+		
+	}
+	
+	public void spinnerValor(ChangeEvent e) throws IllegalArgumentException { 
+		
+		if((int) visual.reqMinimoEquipo.getNextValue() > 26) {
+			visual.reqMinimoEquipo.setValue(25);
+			throw new IllegalArgumentException("La calificación del equipo no puede ser mayor que 25");
+		}
+		if((int) visual.reqMinimoEquipo.getValue() < 12) {
+			visual.reqMinimoEquipo.setValue(12);
+			throw new IllegalArgumentException("La calificación del equipo no puede ser menor que 12");
+		}
+		System.out.println(visual.reqMinimoEquipo.getValue());
 	}
 }
