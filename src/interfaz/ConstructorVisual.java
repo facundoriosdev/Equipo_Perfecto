@@ -10,16 +10,26 @@ import javax.swing.JList;
 import javax.swing.JPanel;
 import javax.swing.JSpinner;
 import javax.swing.JTextField;
+import javax.swing.JLabel;
+import javax.swing.JInternalFrame;
+import javax.swing.SwingConstants;
+import java.awt.Insets;
+import javax.swing.border.BevelBorder;
+import javax.swing.border.CompoundBorder;
+import javax.swing.border.LineBorder;
+import java.awt.Color;
+import javax.swing.border.TitledBorder;
+import javax.swing.JTextArea;
 
 public class ConstructorVisual {
 	
 	
 	JFrame frame;
 	JTextField nombreEquipoNuevo;
-	JTextField informacionSolicitada;
 	JSpinner reqMinimoEquipo;
-	JButton visualizarDisponibles, detallesEmpleado, detallesEquipo;
+	JButton crearEquipo, detallesEmpleado, detallesEquipo;
 	JComboBox<String> empleadosDisponibles;
+	JTextArea informacionSolicitada;
 	
 	JList<String> listaEquiposCreados;
 	
@@ -50,7 +60,8 @@ public class ConstructorVisual {
 		
 		
 		JPanel panelDetalles = new JPanel();
-		panelDetalles.setBounds(10, 0, 516, 567);
+		panelDetalles.setBorder(new TitledBorder(null, "", TitledBorder.LEADING, TitledBorder.TOP, null, null));
+		panelDetalles.setBounds(10, 0, 516, 290);
 		frame.getContentPane().add(panelDetalles);
 		panelDetalles.setLayout(null);
 		
@@ -71,35 +82,26 @@ public class ConstructorVisual {
 		detallesEmpleado.setBounds(256, 53, 126, 20);
 		panelDetalles.add(detallesEmpleado);
 		
-		informacionSolicitada = new JTextField();
-		informacionSolicitada.setBounds(10, 317, 283, 239);
-		panelDetalles.add(informacionSolicitada);
-		informacionSolicitada.setColumns(10);
-		
-		
-		
-		
 		/////////////////////////////////////////////////////////////////////////////////////////////////////////////
 		/////////////////////////////////////////////////////////////////////////////////////////////////////////////
+		
 		JPanel panelCreacion = new JPanel();
+		panelCreacion.setBorder(new LineBorder(new Color(0, 0, 0)));
 		panelCreacion.setBounds(595, 11, 166, 124);
 		frame.getContentPane().add(panelCreacion);
 		panelCreacion.setLayout(null);
 		
-		
-		
-		visualizarDisponibles = new JButton("Crear Equipo");
-		visualizarDisponibles.setBounds(61, 82, 95, 23);
-		panelCreacion.add(visualizarDisponibles);
+	
+		crearEquipo = new JButton("Crear Equipo");
+		crearEquipo.setBounds(61, 82, 95, 23);
+		panelCreacion.add(crearEquipo);
 		
 		
 		// 12 x 5 = 60, maximo de desempeño que puede tener un equipo
 		reqMinimoEquipo = new JSpinner();
 		reqMinimoEquipo.setBounds(109, 42, 47, 26);
-		reqMinimoEquipo.setValue(13);
+		reqMinimoEquipo.setValue(12);
 		panelCreacion.add(reqMinimoEquipo);
-		
-		
 		
 		
 		nombreEquipoNuevo = new JTextField();
@@ -109,6 +111,10 @@ public class ConstructorVisual {
 		
 		/////////////////////////////////////////////////////////////////////////////////////////////////////////////
 		/////////////////////////////////////////////////////////////////////////////////////////////////////////////
+		
+		informacionSolicitada = new JTextArea();
+		informacionSolicitada.setBounds(10, 324, 516, 232);
+		frame.getContentPane().add(informacionSolicitada);
+		
 	}
-
 }

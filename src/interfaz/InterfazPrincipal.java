@@ -23,9 +23,7 @@ import javax.swing.JPanel;
 
 public class InterfazPrincipal {
 	
-	private JFrame frmEquipoPerfecto;
-	private JTextField nombreEquipoNuevo;
-	private JTextField informacionSolicitada;
+
 	private ConstructorVisual visual;
 
 	
@@ -51,23 +49,48 @@ public class InterfazPrincipal {
 
 	public void peneParaEventos() {
 		
-	
 		visual.reqMinimoEquipo.addChangeListener(new ChangeListener() {
 			public void stateChanged(ChangeEvent e) {
 				spinnerValor(e); 	
 			}
-		}); 
+		}); 	
+		
+		visual.crearEquipo.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				creacionEquipo();
+			}
+		});
+		
 		
 	}
+	
+	
+	
+	//////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+	//////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+	
+	public void creacionEquipo() {
+		if(visual.nombreEquipoNuevo != null && (int) visual.reqMinimoEquipo.getValue() < 26 
+				&& (int) visual.reqMinimoEquipo.getValue() > 11) {
+			visual.informacionSolicitada.setText("pene");
+		}
+		else {
+			visual.informacionSolicitada.setText("Cuidado: \nEl nombre del equipo debe tener como minimo un caracter, ademas"
+					+ "\nla calificación tiene que ser entre 12 y 26");
+		}
+	}
+
 	
 	public void spinnerValor(ChangeEvent e) throws IllegalArgumentException { 
 		
 		if((int) visual.reqMinimoEquipo.getNextValue() > 26) {
 			visual.reqMinimoEquipo.setValue(25);
+			visual.informacionSolicitada.setText("La calificación del equipo no puede ser mayor que 25");
 			throw new IllegalArgumentException("La calificación del equipo no puede ser mayor que 25");
 		}
 		if((int) visual.reqMinimoEquipo.getValue() < 12) {
 			visual.reqMinimoEquipo.setValue(12);
+			visual.informacionSolicitada.setText("La calificación del equipo no puede ser menor que 12");
 			throw new IllegalArgumentException("La calificación del equipo no puede ser menor que 12");
 		}
 		System.out.println(visual.reqMinimoEquipo.getValue());
