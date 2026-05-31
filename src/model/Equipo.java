@@ -8,11 +8,16 @@ public class Equipo {
 	ArrayList<Empleado> miembros;
 	private int puntajeTotal;
 	private Map<Roles, Integer> roles;
+	
 
-	public Equipo(ArrayList<Empleado> empleados) {
-		this.miembros = empleados;
+	public Equipo() {
+		this.miembros= new ArrayList<Empleado>();
 		this.puntajeTotal = 0;
 		this.roles = new HashMap<Roles, Integer>();
+		for(Roles rol: Roles.values()) {
+			roles.put(rol, 0);
+			
+		}
 	}
 
 	public void agregarMiembro(Empleado miembro) {
@@ -32,9 +37,9 @@ public class Equipo {
 	}
 
 	public boolean cumpleRequerimientos(RequerimientoEquipo req) {
-		for (Roles rol : Roles.values()) {
+		for (Roles rol :this.roles.keySet()) {
 			if (this.roles.get(rol) != req.getCantidadNecesaria(rol)) {
-				return this.roles.get(rol) != req.getCantidadNecesaria(rol) && req.cantidadDeMiembros==miembros.size() ;
+				return false ;
 			}
 		}
 		return true;
@@ -50,4 +55,12 @@ public class Equipo {
 	public ArrayList <Empleado>getEmpleados() {
 		return miembros;
 	}
+	public Equipo clonar() {
+        Equipo equipoClon = new Equipo();
+        for(Empleado emp: this.miembros) {
+        	equipoClon.agregarMiembro(emp);
+        }
+        return equipoClon;
+        
+    }
 }
