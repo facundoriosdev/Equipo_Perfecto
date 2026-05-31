@@ -49,7 +49,7 @@ public class ConstructorVisual {
 		/////////////////////////////////////////////////////////////////////////////////////////////////////////////
 		
 		ArrayList<String> asd = new ArrayList<>();
-		asd.add("hola");asd.add("hola");asd.add("hola");asd.add("hola");asd.add("hola");asd.add("hola");asd.add("hola");
+		asd.add("hola");asd.add("pene");asd.add("hola");asd.add("hola");asd.add("hola");asd.add("hola");asd.add("hola");
 		DefaultListModel<String> nombre = new DefaultListModel<>();
 		for(String s : asd) {
 			nombre.addElement(s);
