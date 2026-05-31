@@ -44,4 +44,10 @@ public class Equipo {
 	public int getPuntajeTotal() {
 		return this.puntajeTotal;
 	}
+	public int getCantidadDeCiertoRol(Roles rol) {
+		return roles.get(rol);
+	}
+	public ArrayList <Empleado>getEmpleados() {
+		return miembros;
+	}
 }

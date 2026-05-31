@@ -1,17 +1,15 @@
 package model;
 
-
 import java.util.ArrayList;
 
 public class BackTracking {
 	ArrayList<Empleado> empleados;
 	Equipo equipoFinal;
-	GestorCompatibilidad gestor;
+	Incompatibilidad gestor;
 	RequerimientoEquipo requerimientos;
 	int iteraciones = 0;
 
-	public BackTracking(ArrayList<Empleado> empleados, RequerimientoEquipo requerimientos,
-			GestorCompatibilidad gestor) {
+	public BackTracking(ArrayList<Empleado> empleados, RequerimientoEquipo requerimientos, Incompatibilidad gestor) {
 		this.empleados = empleados;
 		this.requerimientos = requerimientos;
 		this.gestor = gestor;
@@ -36,11 +34,12 @@ public class BackTracking {
 			return;
 		}
 		if (indice == empleados.size()) {
+
 			return;
 		}
 		Empleado empleadoActual = empleados.get(indice);
 
-		if (esValidoAgregar(empleadoActual)) {
+		if (esValidoAgregar(empleadoActual, equipoActual)) {
 			equipoActual.agregarMiembro(empleadoActual);
 			creadorDeEquipos(indice + 1, equipoActual);
 			equipoActual.removerMiembro(empleadoActual);
@@ -49,9 +48,19 @@ public class BackTracking {
 
 	}
 
-	private boolean esValidoAgregar(Empleado empleadoActual) {
-		// TODO Auto-generated method stub
-		return false;
+	private boolean esValidoAgregar(Empleado empleadoActual, Equipo equipoActual) {
+		int cantidadActualDeRol = equipoActual.getCantidadDeCiertoRol(empleadoActual.getRol());
+		int cantidadMaximaDeRol = requerimientos.getCantidadDeRol(empleadoActual.getRol());
+		if (cantidadActualDeRol > cantidadMaximaDeRol) {
+			return false;
+		}
+		for (Empleado actual : equipoActual.getEmpleados()) {
+			if (gestor.sonIncompatibles(empleadoActual, actual)) {
+				return false;
+			}
+		}
+		return true;
+
 	}
 
 }
