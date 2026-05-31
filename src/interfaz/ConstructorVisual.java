@@ -19,6 +19,9 @@ import javax.swing.border.CompoundBorder;
 import javax.swing.border.LineBorder;
 import java.awt.Color;
 import javax.swing.border.TitledBorder;
+
+import model.*;
+
 import javax.swing.JTextArea;
 
 public class ConstructorVisual {
@@ -28,10 +31,12 @@ public class ConstructorVisual {
 	JTextField nombreEquipoNuevo;
 	JSpinner reqMinimoEquipo;
 	JButton crearEquipo, detallesEmpleado, detallesEquipo;
-	JComboBox<String> empleadosDisponibles;
+//	JComboBox<String> empleadosDisponibles;
 	JTextArea informacionSolicitada;
-	
 	JList<String> listaEquiposCreados;
+	JList<Empleado> empleadosDisponibles;
+	
+	Empleado empleados;
 	
 	public ConstructorVisual() {
 		initialize();
@@ -47,13 +52,29 @@ public class ConstructorVisual {
 		
 		/////////////////////////////////////////////////////////////////////////////////////////////////////////////
 		/////////////////////////////////////////////////////////////////////////////////////////////////////////////
-		
+		///ESTOY BOLUDEANDO, HAY QUE BORRAR ESTO CUANDO TENGAMOS LAS LISTAS CREADAS
+		/// 
+		/// 
 		ArrayList<String> asd = new ArrayList<>();
 		asd.add("hola");asd.add("hola");asd.add("hola");asd.add("hola");asd.add("hola");asd.add("hola");asd.add("hola");
 		DefaultListModel<String> nombre = new DefaultListModel<>();
 		for(String s : asd) {
 			nombre.addElement(s);
 		}
+		
+		DefaultListModel<Empleado>empleados = new DefaultListModel<>();
+		empleados.addElement(new Empleado("pepe",Roles.PROGRAMADOR, 5));
+		empleados.addElement(new Empleado("carlos",Roles.PROGRAMADOR, 5));
+		empleados.addElement(new Empleado("rodrigo",Roles.PROGRAMADOR, 5));
+		empleados.addElement(new Empleado("arturo",Roles.PROGRAMADOR, 5));
+		empleados.addElement(new Empleado("juan",Roles.PROGRAMADOR, 5));
+		empleados.addElement(new Empleado("cristian",Roles.PROGRAMADOR, 5));
+		empleados.addElement(new Empleado("luis",Roles.PROGRAMADOR, 5));
+		empleados.addElement(new Empleado("chano",Roles.LIDER_PROYECTO, 5));
+		empleados.addElement(new Empleado("Mauro Daniel Castillo",Roles.LIDER_PROYECTO, 5));
+
+		
+		
 		/////////////////////////////////////////////////////////////////////////////////////////////////////////////
 		/////////////////////////////////////////////////////////////////////////////////////////////////////////////
 		
@@ -74,12 +95,14 @@ public class ConstructorVisual {
 		panelDetalles.add(detallesEquipo);
 		
 		
-		empleadosDisponibles = new JComboBox();
-		empleadosDisponibles.setBounds(256, 11, 126, 31);
+		empleadosDisponibles = new JList<Empleado>(empleados);
+		empleadosDisponibles.setBounds(256, 11, 126, 219);
 		panelDetalles.add(empleadosDisponibles);
 		
+		
+		
 		detallesEmpleado = new JButton("Mostrar Detalles");
-		detallesEmpleado.setBounds(256, 53, 126, 20);
+		detallesEmpleado.setBounds(256, 241, 126, 20);
 		panelDetalles.add(detallesEmpleado);
 		
 		/////////////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -113,6 +136,7 @@ public class ConstructorVisual {
 		/////////////////////////////////////////////////////////////////////////////////////////////////////////////
 		
 		informacionSolicitada = new JTextArea();
+		informacionSolicitada.setEditable(false);
 		informacionSolicitada.setBounds(10, 324, 516, 232);
 		frame.getContentPane().add(informacionSolicitada);
 		

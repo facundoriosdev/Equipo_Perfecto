@@ -6,13 +6,22 @@ public class Empleado {
 	private String nombre;
 	private Roles rol;
 	private int calificacion;
+	private boolean disponible;
 
 	public Empleado(String nombre, Roles rol, int calificacion) {
 		this.nombre = nombre;
 		this.rol = rol;
 		this.calificacion = calificacion;
+		this.disponible = true;
 	}
-
+	
+	public boolean getDisponible() {
+		return disponible;
+	}
+	public void setDisponible(boolean e) {
+		disponible = e;
+	}
+	
 	public String getNombre() {
 		return nombre;
 	}
@@ -24,6 +33,7 @@ public class Empleado {
 	public int getCalificacion() {
 		return calificacion;
 	}
+
 	@Override
 	public boolean equals(Object o) {
 		if (this == o)
@@ -38,4 +48,12 @@ public class Empleado {
 	public int hashCode() {
 		return Objects.hash(nombre);
 	}
+
+
+	
+	@Override
+	public String toString() {
+		return nombre;
+	}
 }
+
