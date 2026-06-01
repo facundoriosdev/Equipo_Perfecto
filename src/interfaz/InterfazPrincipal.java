@@ -6,6 +6,7 @@ import java.awt.event.ActionListener;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.LinkedList;
+import java.util.Map;
 
 import javax.swing.JFrame;
 import javax.swing.JComboBox;
@@ -27,8 +28,9 @@ import javax.swing.JPanel;
 
 public class InterfazPrincipal {
 	
-	
+	private Equipo equipo;
 	private ConstructorVisual visual;
+	private Empleado empleado;
 	//private HashMap<String, Equipo> equiposCreados;
 	
 	public static void main(String[] args) {
@@ -99,7 +101,25 @@ public class InterfazPrincipal {
 			visual.informacionSolicitada.setText("Cuidado: \nEl nombre del equipo debe tener como minimo un caracter, ademas"
 					+ "\nla calificación tiene que ser entre 12 y 26");
 		}
-		
+		else if((int)visual.cantidadArquitectos.getValue() < 1 && (int) visual.cantidadProgramadores.getValue() < 1 && 
+				(int) visual.cantidadTesters.getValue() < 1 && !visual.liderEquipoBoton.isSelected()) {
+			visual.informacionSolicitada.setText("El equipo necesita un miembro como minimo");
+		}
+
+		else {
+			Map<Roles, Integer> rolReq = new HashMap<Roles, Integer>();
+			
+			
+			rolReq.put(Roles.LIDER_PROYECTO, visual.liderEquipoBoton.isSelected() ? 1:0);
+			
+			
+			rolReq.put(Roles.ARQUITECTO, (int) visual.cantidadArquitectos.getValue());
+			rolReq.put(Roles.PROGRAMADOR, (int) visual.cantidadProgramadores.getValue());
+			rolReq.put(Roles.TESTER, (int) visual.cantidadTesters.getValue());
+			visual.informacionSolicitada.setText(rolReq.toString());
+			
+			
+		}
 	}
 
 	
