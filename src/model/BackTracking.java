@@ -61,7 +61,7 @@ public class BackTracking {
 			return false;
 		}
 		for (Empleado actual : equipoActual.getEmpleados()) {
-			if (gestor.isPuedenTrabajarJuntos(empleadoActual, actual)) {
+			if (!gestor.isPuedenTrabajarJuntos(empleadoActual, actual)) {
 				return false;
 			}
 		}

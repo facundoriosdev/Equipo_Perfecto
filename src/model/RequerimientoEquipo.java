@@ -15,6 +15,9 @@ public class RequerimientoEquipo {
 	}
 
 	public int getCantidadNecesaria(Roles rol) {
+		Integer cantidad = requerimientosEquipo.get(rol);
+		if( cantidad == null)
+			return 0;
 		return this.requerimientosEquipo.get(rol).intValue();
 	}
 }

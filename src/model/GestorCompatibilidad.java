@@ -37,16 +37,16 @@ public class GestorCompatibilidad {
 
 	/**
 	 * Verifica en el grafo si existe una incompatibilidad registrada entre dos
-	 * empleados. 
+	 * empleados.
 	 * 
 	 * @param e1 El primer empleado a consultar.
 	 * @param e2 El segundo empleado a consultar.
-	 * @return {@code true} si los empleados son incompatibles (no pueden trabajar
-	 *         juntos), {@code false} si no hay restricciones entre ellos.
+	 * @return {@code false} si los empleados son incompatibles (no pueden trabajar
+	 *         juntos), {@code true} si no hay restricciones entre ellos.
 	 */
 	public boolean isPuedenTrabajarJuntos(Empleado e1, Empleado e2) {
 		Set<Empleado> odiados = grafoIncompatibilidades.get(e1);
-		return !(odiados != null && odiados.contains(e2));
+		return odiados == null || !odiados.contains(e2);
 	}
 
 	private void agregarEmpleadoOdiado(Empleado base, Empleado agregado) {
