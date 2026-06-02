@@ -72,7 +72,7 @@ public class ConstructorVisual {
 		for(String s : asd) {
 			nombre.addElement(s);
 		}
-		ArrayList<Empleado> empleadosGeneralDisponible = new ArrayList<Empleado>();
+		empleadosGeneralDisponible = new ArrayList<Empleado>();
 		empleadosGeneralDisponible.add(new Empleado("pepe",Roles.PROGRAMADOR, 5));
 		empleadosGeneralDisponible.add(new Empleado("carlos",Roles.PROGRAMADOR, 5));
 		empleadosGeneralDisponible.add(new Empleado("rodrigo",Roles.PROGRAMADOR, 5));
@@ -95,7 +95,7 @@ public class ConstructorVisual {
 		incompatibles = new ArrayList<Incompatible>();
 		incompatibles.add(new Incompatible(empleado4, empleado5));
 		
-		ArrayList<Empleado> empleadosNoDisponibles = new ArrayList<>();
+		empleadosNoDisponibles = new ArrayList<>();
 		
 		DefaultListModel<Empleado>empleados = new DefaultListModel<>();
 		for(Empleado e : empleadosGeneralDisponible) {

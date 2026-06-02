@@ -28,11 +28,9 @@ import javax.swing.JPanel;
 
 public class InterfazPrincipal {
 	
-	private Equipo equipo;
 	private ConstructorVisual visual;
-	private Empleado empleado;
 	private RequerimientoEquipo requerimientoEquipo;
-	//private HashMap<String, Equipo> equiposCreados;
+	private HashMap<String, Equipo> equiposCreados;
 	
 	public static void main(String[] args) {
 		EventQueue.invokeLater(new Runnable() {
@@ -90,7 +88,8 @@ public class InterfazPrincipal {
 		else {
 		visual.informacionSolicitada.setText("Nombre: " + visual.empleadosDisponibles.getSelectedValue().getNombre()
 				+ "\nRol: " + visual.empleadosDisponibles.getSelectedValue().getRol()
-				+ "\nCalificación: " + visual.empleadosDisponibles.getSelectedValue().getCalificacion());
+				+ "\nCalificación: " + visual.empleadosDisponibles.getSelectedValue().getCalificacion()
+				+ "\nDisponibilidad: " + visual.empleadosDisponibles.getSelectedValue().getDisponible());
 		}
 	}
 	
@@ -118,11 +117,20 @@ public class InterfazPrincipal {
 			requerimientoEquipo = new RequerimientoEquipo(rolReq);
 			
 			visual.informacionSolicitada.setText(rolReq.toString());
+			ArrayList<Empleado> xd = new ArrayList<Empleado>();
+			for(Empleado e : visual.empleadosGeneralDisponible) {
+				xd.add(e);
+			}
 			
-			BackTracking nuevo = new BackTracking(visual.empleadosNoDisponibles, visual.incompatibles, requerimientoEquipo );
+			BackTracking nuevo = new BackTracking(visual.empleadosGeneralDisponible, visual.incompatibles, requerimientoEquipo );
 			nuevo.resolver();
-//			Equipo mejorEquipo = nuevo.getEquipoFinal();
-//			visual.informacionSolicitada.setText(mejorEquipo.toString());
+			Equipo mejorEquipo = nuevo.getEquipoFinal();
+			
+			for(Empleado e : mejorEquipo.getEmpleados()) {
+				e.setDisponible(false);
+				visual.empleadosNoDisponibles.add(e);
+			}
+			visual.informacionSolicitada.setText(mejorEquipo.toString() + "\nnoDisp:" + visual.empleadosNoDisponibles);
 		}
 	}
  
