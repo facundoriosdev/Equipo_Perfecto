@@ -6,6 +6,7 @@ import java.util.Map;
 
 public class Equipo {
 	ArrayList<Empleado> miembros;
+	String _nombre;
 	private int puntajeTotal;
 	private Map<Roles, Integer> roles;
 	
@@ -19,7 +20,15 @@ public class Equipo {
 			
 		}
 	}
-
+	
+	public void setNombre(String nombre) {
+		_nombre = nombre;
+	}
+	
+	public String getNombre() {
+		return _nombre;
+	}
+	
 	public void agregarMiembro(Empleado miembro) {
 		this.miembros.add(miembro);
 		this.puntajeTotal += miembro.getCalificacion();

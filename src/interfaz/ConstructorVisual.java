@@ -24,6 +24,7 @@ import model.*;
 
 import javax.swing.JTextArea;
 import javax.swing.JRadioButton;
+import javax.swing.ListSelectionModel;
 
 public class ConstructorVisual {
 	
@@ -38,10 +39,6 @@ public class ConstructorVisual {
 	JList<Empleado> empleadosDisponibles;
 	JRadioButton liderEquipoBoton;
 	
-	ArrayList<Incompatible> incompatibles;
-
-	Empleado empleados;
-	ArrayList<Empleado> empleadosGeneralDisponible, empleadosNoDisponibles;
 	
 	private JTextField txtArquitectos;
 	private JTextField txtProgramadores;
@@ -61,54 +58,8 @@ public class ConstructorVisual {
 		frame.getContentPane().setLayout(null); 
 		
 		
-		/////////////////////////////////////////////////////////////////////////////////////////////////////////////
-		/////////////////////////////////////////////////////////////////////////////////////////////////////////////
-		///ESTOY BOLUDEANDO, HAY QUE BORRAR ESTO CUANDO TENGAMOS LAS LISTAS CREADAS
-		/// 
-		/// 
-		ArrayList<String> asd = new ArrayList<>();
-		asd.add("hola");asd.add("hola");asd.add("hola");asd.add("hola");asd.add("hola");asd.add("hola");asd.add("hola");
-		DefaultListModel<String> nombre = new DefaultListModel<>();
-		for(String s : asd) {
-			nombre.addElement(s);
-		}
-		empleadosGeneralDisponible = new ArrayList<Empleado>();
-		empleadosGeneralDisponible.add(new Empleado("pepe",Roles.PROGRAMADOR, 5));
-		empleadosGeneralDisponible.add(new Empleado("carlos",Roles.PROGRAMADOR, 5));
-		empleadosGeneralDisponible.add(new Empleado("rodrigo",Roles.PROGRAMADOR, 5));
-		empleadosGeneralDisponible.add(new Empleado("arturo",Roles.PROGRAMADOR, 5));
-		empleadosGeneralDisponible.add(new Empleado("juan",Roles.PROGRAMADOR, 5));
-		empleadosGeneralDisponible.add(new Empleado("cristian",Roles.PROGRAMADOR, 5));
-		empleadosGeneralDisponible.add(new Empleado("luis",Roles.PROGRAMADOR, 5));
-		empleadosGeneralDisponible.add(new Empleado("chano",Roles.LIDER_PROYECTO, 5));
-		empleadosGeneralDisponible.add(new Empleado("Mauro Daniel Castillo",Roles.LIDER_PROYECTO, 5));
-		empleadosGeneralDisponible.add(new Empleado("hola",Roles.ARQUITECTO, 1));
-		empleadosGeneralDisponible.add(new Empleado("hola1",Roles.ARQUITECTO, 1));
-		
-		Empleado empleado4 = new Empleado("chan4o", Roles.LIDER_PROYECTO, 1);
-		Empleado empleado5 = new Empleado("Mauro Daniel Castillo", Roles.LIDER_PROYECTO, 1);
-		Empleado empleado6 = new Empleado("chano", Roles.LIDER_PROYECTO, 5);
-		empleadosGeneralDisponible.add(empleado5);
-		empleadosGeneralDisponible.add(empleado4);
-		empleadosGeneralDisponible.add(empleado6);
-		
-		incompatibles = new ArrayList<Incompatible>();
-		incompatibles.add(new Incompatible(empleado4, empleado5));
-		
-		empleadosNoDisponibles = new ArrayList<>();
-		
-		DefaultListModel<Empleado>empleados = new DefaultListModel<>();
-		for(Empleado e : empleadosGeneralDisponible) {
-			if(e.getNombre().equals("hola")) {
-				e.setDisponible(false);
-			}
-			
-				empleados.addElement(e);
-			
-		}
-
-		
-		
+	
+	
 		/////////////////////////////////////////////////////////////////////////////////////////////////////////////
 		/////////////////////////////////////////////////////////////////////////////////////////////////////////////
 		
@@ -120,7 +71,7 @@ public class ConstructorVisual {
 		frame.getContentPane().add(panelDetalles);
 		panelDetalles.setLayout(null);
 		
-		listaEquiposCreados = new JList<>(nombre);
+		listaEquiposCreados = new JList<>();
 		listaEquiposCreados.setBounds(10, 11, 178, 219);
 		panelDetalles.add(listaEquiposCreados);
 		
@@ -129,8 +80,11 @@ public class ConstructorVisual {
 		panelDetalles.add(detallesEquipo);
 		
 		
-		empleadosDisponibles = new JList<Empleado>(empleados);
+		empleadosDisponibles = new JList<Empleado>();
+		empleadosDisponibles.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
+		empleadosDisponibles.setValueIsAdjusting(true);
 		empleadosDisponibles.setBounds(256, 11, 126, 219);
+		empleadosDisponibles.setDragEnabled(true);
 		panelDetalles.add(empleadosDisponibles);
 		
 		

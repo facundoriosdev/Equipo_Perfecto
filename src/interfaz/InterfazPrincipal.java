@@ -29,8 +29,11 @@ import javax.swing.JPanel;
 public class InterfazPrincipal {
 	
 	private ConstructorVisual visual;
+	private ListaEmpleados listaEmpleados;
 	private RequerimientoEquipo requerimientoEquipo;
 	private HashMap<String, Equipo> equiposCreados;
+	private DefaultListModel<Empleado> empDis;
+	private DefaultListModel<String> nombreEquipos;
 	
 	public static void main(String[] args) {
 		EventQueue.invokeLater(new Runnable() {
@@ -48,11 +51,18 @@ public class InterfazPrincipal {
 
 	public InterfazPrincipal(ConstructorVisual visual) {
 		this.visual = visual;
+		
+		listaEmpleados = new ListaEmpleados();
+		listaEmpleados.cargarEmpleados();
+		
 		peneParaEventos();
 	}
 
 
 	public void peneParaEventos() {
+		
+		actualizarDisponibles();
+		
 		
 		visual.reqMinimoEquipo.addChangeListener(new ChangeListener() {
 			public void stateChanged(ChangeEvent e) {
@@ -107,9 +117,8 @@ public class InterfazPrincipal {
 		}
 
 		else {
+			
 			Map<Roles, Integer> rolReq = new HashMap<Roles, Integer>(); 
-			
-			
 			rolReq.put(Roles.LIDER_PROYECTO, visual.liderEquipoBoton.isSelected() ? 1:0);
 			rolReq.put(Roles.ARQUITECTO, (int) visual.cantidadArquitectos.getValue());
 			rolReq.put(Roles.PROGRAMADOR, (int) visual.cantidadProgramadores.getValue());
@@ -117,24 +126,26 @@ public class InterfazPrincipal {
 			requerimientoEquipo = new RequerimientoEquipo(rolReq);
 			
 			visual.informacionSolicitada.setText(rolReq.toString());
-			ArrayList<Empleado> xd = new ArrayList<Empleado>();
-			for(Empleado e : visual.empleadosGeneralDisponible) {
-				xd.add(e);
-			}
 			
-			BackTracking nuevo = new BackTracking(visual.empleadosGeneralDisponible, visual.incompatibles, requerimientoEquipo );
+			
+			BackTracking nuevo = new BackTracking(listaEmpleados.empleadosDisponibles, listaEmpleados.incompatibles, requerimientoEquipo );
 			nuevo.resolver();
 			Equipo mejorEquipo = nuevo.getEquipoFinal();
 			
 			for(Empleado e : mejorEquipo.getEmpleados()) {
 				e.setDisponible(false);
-				visual.empleadosNoDisponibles.add(e);
+				listaEmpleados.empleadosNoDisponibles.add(e);
+				listaEmpleados.empleadosDisponibles.remove(e);
 			}
-			visual.informacionSolicitada.setText(mejorEquipo.toString() + "\nnoDisp:" + visual.empleadosNoDisponibles);
+			actualizarDisponibles();
+			agregarNuevoEquipo(mejorEquipo, visual.nombreEquipoNuevo.getText());
+			agregarEquipoLista(mejorEquipo.getNombre());
+			visual.informacionSolicitada.setText(mejorEquipo.toString());
+
 		}
 	}
  
-	
+//	visual.informacionSolicitada.setText("\nnoDisp:" + listaEmpleados.empleadosNoDisponibles);
 	public void spinnerValor(ChangeEvent e) throws IllegalArgumentException { 
 		
 		if((int) visual.reqMinimoEquipo.getNextValue() > 26) {
@@ -149,4 +160,26 @@ public class InterfazPrincipal {
 		}
 	}
 	
+	public void actualizarDisponibles() {
+		
+		empDis = new DefaultListModel<>();
+		for(Empleado e : listaEmpleados.empleadosDisponibles) {
+			if(e.getDisponible())
+				empDis.addElement(e);
+		}
+		visual.empleadosDisponibles.setModel(empDis);
+	}
+	
+	public void agregarNuevoEquipo(Equipo equipo, String nombre){
+		equiposCreados = new HashMap<>();
+		equipo.setNombre(nombre);
+		equiposCreados.put(nombre, equipo);
+	}
+	
+	public void agregarEquipoLista(String nombre) {
+		nombreEquipos = new DefaultListModel<>();
+		nombreEquipos.addElement(nombre);
+		
+		visual.listaEquiposCreados.setModel(nombreEquipos);
+	}
 }
