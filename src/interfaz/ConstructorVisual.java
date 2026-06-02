@@ -25,6 +25,9 @@ import model.*;
 import javax.swing.JTextArea;
 import javax.swing.JRadioButton;
 import javax.swing.ListSelectionModel;
+import javax.swing.JScrollBar;
+import java.awt.Scrollbar;
+import javax.swing.JScrollPane;
 
 public class ConstructorVisual {
 	
@@ -71,21 +74,26 @@ public class ConstructorVisual {
 		frame.getContentPane().add(panelDetalles);
 		panelDetalles.setLayout(null);
 		
+		JScrollPane scrollPane_1 = new JScrollPane();
+		scrollPane_1.setBounds(10, 11, 178, 219);
+		panelDetalles.add(scrollPane_1);
+		
 		listaEquiposCreados = new JList<>();
-		listaEquiposCreados.setBounds(10, 11, 178, 219);
-		panelDetalles.add(listaEquiposCreados);
+		scrollPane_1.setViewportView(listaEquiposCreados);
 		
 		detallesEquipo = new JButton("Mostrar detalles del equipo");
 		detallesEquipo.setBounds(10, 241, 178, 45);
 		panelDetalles.add(detallesEquipo);
 		
+		JScrollPane scrollPane = new JScrollPane();
+		scrollPane.setBounds(242, 21, 158, 219);
+		panelDetalles.add(scrollPane);
+		
 		
 		empleadosDisponibles = new JList<Empleado>();
+		scrollPane.setViewportView(empleadosDisponibles);
 		empleadosDisponibles.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
 		empleadosDisponibles.setValueIsAdjusting(true);
-		empleadosDisponibles.setBounds(256, 11, 126, 219);
-		empleadosDisponibles.setDragEnabled(true);
-		panelDetalles.add(empleadosDisponibles);
 		
 		
 		
@@ -182,14 +190,17 @@ public class ConstructorVisual {
 		panelCreacion.add(txtCalificacinMinima);
 		txtCalificacinMinima.setColumns(10);
 		
+		JScrollPane scrollPane_2 = new JScrollPane();
+		scrollPane_2.setBounds(10, 324, 516, 232);
+		frame.getContentPane().add(scrollPane_2);
+		
 		/////////////////////////////////////////////////////////////////////////////////////////////////////////////
 		/////////////////////////////////////////////////////////////////////////////////////////////////////////////
 		
 		informacionSolicitada = new JTextArea();
+		scrollPane_2.setViewportView(informacionSolicitada);
 		informacionSolicitada.setFocusable(false);
 		informacionSolicitada.setEditable(false);
-		informacionSolicitada.setBounds(10, 324, 516, 232);
-		frame.getContentPane().add(informacionSolicitada);
 		
 	}
 }
