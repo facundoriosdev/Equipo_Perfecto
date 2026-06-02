@@ -31,6 +31,7 @@ public class InterfazPrincipal {
 	private Equipo equipo;
 	private ConstructorVisual visual;
 	private Empleado empleado;
+	private RequerimientoEquipo requerimientoEquipo;
 	//private HashMap<String, Equipo> equiposCreados;
 	
 	public static void main(String[] args) {
@@ -107,21 +108,24 @@ public class InterfazPrincipal {
 		}
 
 		else {
-			Map<Roles, Integer> rolReq = new HashMap<Roles, Integer>();
+			Map<Roles, Integer> rolReq = new HashMap<Roles, Integer>(); 
 			
 			
 			rolReq.put(Roles.LIDER_PROYECTO, visual.liderEquipoBoton.isSelected() ? 1:0);
-			
-			
 			rolReq.put(Roles.ARQUITECTO, (int) visual.cantidadArquitectos.getValue());
 			rolReq.put(Roles.PROGRAMADOR, (int) visual.cantidadProgramadores.getValue());
 			rolReq.put(Roles.TESTER, (int) visual.cantidadTesters.getValue());
+			requerimientoEquipo = new RequerimientoEquipo(rolReq);
+			
 			visual.informacionSolicitada.setText(rolReq.toString());
 			
-			
+			BackTracking nuevo = new BackTracking(visual.empleadosNoDisponibles, visual.incompatibles, requerimientoEquipo );
+			nuevo.resolver();
+//			Equipo mejorEquipo = nuevo.getEquipoFinal();
+//			visual.informacionSolicitada.setText(mejorEquipo.toString());
 		}
 	}
-
+ 
 	
 	public void spinnerValor(ChangeEvent e) throws IllegalArgumentException { 
 		

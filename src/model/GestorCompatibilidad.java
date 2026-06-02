@@ -20,7 +20,7 @@ public class GestorCompatibilidad {
 	public GestorCompatibilidad() {
 		this.grafoIncompatibilidades = new HashMap<Empleado, Set<Empleado>>();
 	}
-
+ 
 	/**
 	 * Registra una incompatibilidad bidireccional entre dos empleados.
 	 *

@@ -26,6 +26,7 @@ public class BackTracking {
 		Equipo equipoActual = new Equipo();
 		creadorDeEquipos(0, equipoActual);
 		this.iteraciones = 0;
+		
 	}
 
 	private void creadorDeEquipos(int indice, Equipo equipoActual) {

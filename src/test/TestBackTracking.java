@@ -25,20 +25,22 @@ public class TestBackTracking {
 	@Before
 	public void iniciar() {
 		empleados = new ArrayList<Empleado>();
-		Empleado empleado1 = new Empleado("pepe", Roles.PROGRAMADOR, 3);
-		empleados.add(empleado1);
+		Empleado empleado1 = new Empleado("pepe", Roles.PROGRAMADOR, 1);
 		Empleado empleado2 = new Empleado("carlos", Roles.PROGRAMADOR, 5);
+		Empleado empleado3 = new Empleado("juan", Roles.PROGRAMADOR, 5);
+		empleados.add(empleado1);
 		empleados.add(empleado2);
-		empleados.add(new Empleado("rodrigo", Roles.PROGRAMADOR, 1));
-		empleados.add(new Empleado("arturo", Roles.PROGRAMADOR, 2));
-		Empleado empleado3 = new Empleado("juan", Roles.PROGRAMADOR, 4);
 		empleados.add(empleado3);
-		empleados.add(new Empleado("cristian", Roles.PROGRAMADOR, 3));
-		empleados.add(new Empleado("luis", Roles.PROGRAMADOR, 1));
-		Empleado empleado4 = new Empleado("chano", Roles.LIDER_PROYECTO, 5);
-		empleados.add(empleado4);
-		Empleado empleado5 = new Empleado("Mauro Daniel Castillo", Roles.LIDER_PROYECTO, 5);
-		empleados.add(new Empleado("Mauro Daniel Castillo", Roles.LIDER_PROYECTO, 5));
+		
+		Empleado empleado4 = new Empleado("chano", Roles.LIDER_PROYECTO, 1);
+		Empleado empleado5 = new Empleado("Mauro Daniel Castillo", Roles.LIDER_PROYECTO, 1);
+		Empleado empleado6 = new Empleado("chano", Roles.LIDER_PROYECTO, 5);
+		empleados.add(empleado5);
+		empleados.add(empleado4); 
+		empleados.add(empleado6);
+		
+		empleados.add(new Empleado("messi", Roles.LIDER_PROYECTO, 5));
+		
 		incompatibles = new ArrayList<Incompatible>();
 		incompatibles.add(new Incompatible(empleado1, empleado2));
 		Map<Roles, Integer> requerimientoUsuario = new HashMap<Roles, Integer>();
@@ -46,10 +48,12 @@ public class TestBackTracking {
 		requerimientoUsuario.put(Roles.PROGRAMADOR, 2);
 		req = new RequerimientoEquipo(requerimientoUsuario);
 		mejorEquipo = new Equipo();
+		mejorEquipo.agregarMiembro(empleado1);
 		mejorEquipo.agregarMiembro(empleado2);
 		mejorEquipo.agregarMiembro(empleado3);
 		mejorEquipo.agregarMiembro(empleado4);
 		mejorEquipo.agregarMiembro(empleado5);
+		mejorEquipo.agregarMiembro(empleado6);
 
 	}
 
@@ -57,8 +61,7 @@ public class TestBackTracking {
 	public void mejorequipo() {
 		BackTracking back = new BackTracking(empleados, incompatibles, req);
 		back.resolver();
-		assertEquals(19, back.getEquipoFinal().getPuntajeTotal());
-
+		assertEquals(20, back.getEquipoFinal().getPuntajeTotal());
 	}
 
 }
