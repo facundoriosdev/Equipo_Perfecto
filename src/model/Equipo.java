@@ -76,9 +76,12 @@ public class Equipo {
 	@Override
 	public String toString() {
 		StringBuilder infoEquipo = new StringBuilder();
+		infoEquipo.append("Integrantes: ").append(System.lineSeparator());
+		
 		for(Empleado m : miembros) {
-			infoEquipo.append("Los miembros del equipo son: ").append(m.getNombre()).append(System.lineSeparator());
+			infoEquipo.append(m.getNombre()).append(System.lineSeparator());
 		}
+		
 		infoEquipo.append("Puntaje total del equipo: ").append(puntajeTotal).append(System.lineSeparator());
 		infoEquipo.append("Roles del equipo: ").append(roles);
 		return infoEquipo.toString();

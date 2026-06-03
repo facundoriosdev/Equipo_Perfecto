@@ -25,6 +25,7 @@ public class ListaEmpleados {
 		empleadosDisponibles.add(new Empleado("Mauro Daniel Castillo",Roles.LIDER_PROYECTO, 5));
 		empleadosDisponibles.add(new Empleado("hola",Roles.ARQUITECTO, 1));
 		empleadosDisponibles.add(new Empleado("hola1",Roles.ARQUITECTO, 1));
+		empleadosDisponibles.add(new Empleado("tester1",Roles.TESTER, 1));
 		
 		Empleado empleado4 = new Empleado("chan4o", Roles.LIDER_PROYECTO, 1);
 		Empleado empleado5 = new Empleado("Mauro Daniel Castillo", Roles.LIDER_PROYECTO, 1);
