@@ -119,7 +119,7 @@ public class ConstructorVisual {
 		// 12 x 5 = 60, maximo de desempeño que puede tener un equipo
 		reqMinimoEquipo = new JSpinner();
 		reqMinimoEquipo.setBounds(120, 231, 36, 20);
-		reqMinimoEquipo.setValue(12);
+		reqMinimoEquipo.setValue(0);
 		panelCreacion.add(reqMinimoEquipo);
 		
 		

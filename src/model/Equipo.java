@@ -10,6 +10,7 @@ public class Equipo {
 	private int puntajeTotal;
 	private Map<Roles, Integer> roles;
 	
+	
 
 	public Equipo() {
 		this.miembros= new ArrayList<Empleado>();

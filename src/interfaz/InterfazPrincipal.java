@@ -34,6 +34,9 @@ public class InterfazPrincipal {
 	private HashMap<String, Equipo> equiposCreados;
 	private DefaultListModel<Empleado> empDis;
 	private DefaultListModel<String> nombreEquipos;
+	private Equipo mejorEquipo;
+	
+	
 	
 	public static void main(String[] args) {
 		EventQueue.invokeLater(new Runnable() {
@@ -52,14 +55,16 @@ public class InterfazPrincipal {
 	public InterfazPrincipal(ConstructorVisual visual) {
 		this.visual = visual;
 		
+		nombreEquipos = new DefaultListModel<>();
+		
 		listaEmpleados = new ListaEmpleados();
 		listaEmpleados.cargarEmpleados();
 		
-		peneParaEventos();
+		gestorEventos();
 	}
 
 
-	public void peneParaEventos() {
+	public void gestorEventos() {
 		
 		actualizarDisponibles();
 		
@@ -93,7 +98,7 @@ public class InterfazPrincipal {
 	public void detallesEmpDisp() {
 		
 		if(visual.empleadosDisponibles.getSelectedValue() == null) {
-			visual.informacionSolicitada.setText("Debe seleccionar a un empleado para mostrar su información");
+			visual.informacionSolicitada.setText("Cuidado: \nDebe seleccionar a un empleado para mostrar su información");
 		}
 		else {
 		visual.informacionSolicitada.setText("Nombre: " + visual.empleadosDisponibles.getSelectedValue().getNombre()
@@ -106,57 +111,56 @@ public class InterfazPrincipal {
 	
 	public void creacionEquipo() {
 		
-		if(visual.nombreEquipoNuevo.getText().length() == 0 || (int) visual.reqMinimoEquipo.getValue() > 25 
-				|| (int) visual.reqMinimoEquipo.getValue() < 12) {
-			visual.informacionSolicitada.setText("Cuidado: \nEl nombre del equipo debe tener como minimo un caracter, ademas"
-					+ "\nla calificación tiene que ser entre 12 y 26");
+		if(visual.nombreEquipoNuevo.getText().length() == 0) {
+			visual.informacionSolicitada.setText("Cuidado: \nEl nombre del equipo debe tener como minimo un caracter");
+			return;
 		}
 		else if((int)visual.cantidadArquitectos.getValue() < 1 && (int) visual.cantidadProgramadores.getValue() < 1 && 
 				(int) visual.cantidadTesters.getValue() < 1 && !visual.liderEquipoBoton.isSelected()) {
-			visual.informacionSolicitada.setText("El equipo necesita un miembro como minimo");
+			visual.informacionSolicitada.setText("Cuidado: \nEl equipo necesita un miembro como minimo");
+			return;
 		}
-
-		else {
+	
+		Map<Roles, Integer> rolReq = new HashMap<Roles, Integer>(); 
+		rolReq.put(Roles.LIDER_PROYECTO, visual.liderEquipoBoton.isSelected() ? 1:0);
+		rolReq.put(Roles.ARQUITECTO, (int) visual.cantidadArquitectos.getValue());
+		rolReq.put(Roles.PROGRAMADOR, (int) visual.cantidadProgramadores.getValue());
+		rolReq.put(Roles.TESTER, (int) visual.cantidadTesters.getValue());
+		requerimientoEquipo = new RequerimientoEquipo(rolReq);
 			
-			Map<Roles, Integer> rolReq = new HashMap<Roles, Integer>(); 
-			rolReq.put(Roles.LIDER_PROYECTO, visual.liderEquipoBoton.isSelected() ? 1:0);
-			rolReq.put(Roles.ARQUITECTO, (int) visual.cantidadArquitectos.getValue());
-			rolReq.put(Roles.PROGRAMADOR, (int) visual.cantidadProgramadores.getValue());
-			rolReq.put(Roles.TESTER, (int) visual.cantidadTesters.getValue());
-			requerimientoEquipo = new RequerimientoEquipo(rolReq);
-			
-			visual.informacionSolicitada.setText(rolReq.toString());
+		visual.informacionSolicitada.setText(rolReq.toString());
 			
 			
-			BackTracking nuevo = new BackTracking(listaEmpleados.empleadosDisponibles, listaEmpleados.incompatibles, requerimientoEquipo );
-			nuevo.resolver();
-			Equipo mejorEquipo = nuevo.getEquipoFinal();
+		BackTracking nuevo = new BackTracking(listaEmpleados.empleadosDisponibles, listaEmpleados.incompatibles, requerimientoEquipo );
+		nuevo.resolver();
 			
-			for(Empleado e : mejorEquipo.getEmpleados()) {
-				e.setDisponible(false);
-				listaEmpleados.empleadosNoDisponibles.add(e);
-				listaEmpleados.empleadosDisponibles.remove(e);
-			}
-			actualizarDisponibles();
-			agregarNuevoEquipo(mejorEquipo, visual.nombreEquipoNuevo.getText());
-			agregarEquipoLista(mejorEquipo.getNombre());
-			visual.informacionSolicitada.setText(mejorEquipo.toString());
-
+		if(!cumpleRequisitosMinimos(nuevo)) {
+			visual.informacionSolicitada.setText("Advertencia: \nNo se pudo crear un equipo que cumpla con sus requisitos");
+			return;
 		}
+			
+		mejorEquipo = nuevo.getEquipoFinal();
+		for(Empleado e : mejorEquipo.getEmpleados()) {
+			e.setDisponible(false);
+			listaEmpleados.empleadosNoDisponibles.add(e);
+			listaEmpleados.empleadosDisponibles.remove(e);
+		}
+		
+		actualizarDisponibles();
+		agregarNuevoEquipo(mejorEquipo, visual.nombreEquipoNuevo.getText());
+		agregarEquipoLista(mejorEquipo.getNombre());
+		visual.informacionSolicitada.setText(mejorEquipo.toString());	
+
+		
 	}
  
 //	visual.informacionSolicitada.setText("\nnoDisp:" + listaEmpleados.empleadosNoDisponibles);
-	public void spinnerValor(ChangeEvent e) throws IllegalArgumentException { 
+	public void spinnerValor(ChangeEvent e) { 
 		
-		if((int) visual.reqMinimoEquipo.getNextValue() > 26) {
-			visual.reqMinimoEquipo.setValue(25);
-			visual.informacionSolicitada.setText("La calificación del equipo no puede ser mayor que 25");
-			throw new IllegalArgumentException("La calificación del equipo no puede ser mayor que 25");
-		}
-		if((int) visual.reqMinimoEquipo.getValue() < 12) {
-			visual.reqMinimoEquipo.setValue(12);
-			visual.informacionSolicitada.setText("La calificación del equipo no puede ser menor que 12");
-			throw new IllegalArgumentException("La calificación del equipo no puede ser menor que 12");
+		if((int) visual.reqMinimoEquipo.getValue() < 0 || (int) visual.reqMinimoEquipo.getPreviousValue() < -1) {
+			visual.reqMinimoEquipo.setValue(0);
+			visual.informacionSolicitada.setText("Cuidado: \nLa calificación del equipo no puede ser menor que 0");
+			return;
 		}
 	}
 	
@@ -177,9 +181,17 @@ public class InterfazPrincipal {
 	}
 	
 	public void agregarEquipoLista(String nombre) {
-		nombreEquipos = new DefaultListModel<>();
+		
+		
 		nombreEquipos.addElement(nombre);
 		
 		visual.listaEquiposCreados.setModel(nombreEquipos);
+	}
+	
+	public boolean cumpleRequisitosMinimos(BackTracking equipo) {
+		if(equipo.getEquipoFinal().getPuntajeTotal() < (int)visual.reqMinimoEquipo.getValue()) {
+			return false;
+		}
+		return true;
 	}
 }

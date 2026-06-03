@@ -7,6 +7,7 @@ public class ListaEmpleados {
 	
 	ArrayList<Empleado> empleadosDisponibles, empleadosNoDisponibles;
 	ArrayList<Incompatible> incompatibles;
+	ArrayList<Equipo> equiposLista;
 	
 	public void cargarEmpleados(){
 		
