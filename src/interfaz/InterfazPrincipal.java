@@ -65,15 +65,32 @@ public class InterfazPrincipal {
 
 
 	public void gestorEventos() {
-		
 		actualizarDisponibles();
 		
 		
 		visual.reqMinimoEquipo.addChangeListener(new ChangeListener() {
 			public void stateChanged(ChangeEvent e) {
-				spinnerValor(e); 	
+				spinnerValor(e, visual.reqMinimoEquipo); 	
 			}
 		}); 	
+		
+		visual.cantidadArquitectos.addChangeListener(new ChangeListener() {
+			public void stateChanged(ChangeEvent e) {
+				spinnerValor(e, visual.cantidadArquitectos); 	
+			}
+		}); 
+		
+		visual.cantidadProgramadores.addChangeListener(new ChangeListener() {
+			public void stateChanged(ChangeEvent e) {
+				spinnerValor(e, visual.cantidadProgramadores); 	
+			}
+		}); 
+		
+		visual.cantidadTesters.addChangeListener(new ChangeListener() {
+			public void stateChanged(ChangeEvent e) {
+				spinnerValor(e, visual.cantidadTesters); 	
+			}
+		}); 
 		
 		visual.crearEquipo.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
@@ -142,8 +159,6 @@ public class InterfazPrincipal {
 		rolReq.put(Roles.TESTER, (int) visual.cantidadTesters.getValue());
 		requerimientoEquipo = new RequerimientoEquipo(rolReq);
 			
-		visual.informacionSolicitada.setText(rolReq.toString());
-			
 		BackTracking nuevo = new BackTracking(listaEmpleados.empleadosDisponibles, listaEmpleados.incompatibles, requerimientoEquipo );
 		nuevo.resolver();
 			
@@ -164,9 +179,9 @@ public class InterfazPrincipal {
 	}
  
 //	visual.informacionSolicitada.setText("\nnoDisp:" + listaEmpleados.empleadosNoDisponibles);
-	public void spinnerValor(ChangeEvent e) { 
-		if((int) visual.reqMinimoEquipo.getValue() < 0 || (int) visual.reqMinimoEquipo.getPreviousValue() < -1) {
-			visual.reqMinimoEquipo.setValue(0);
+	public void spinnerValor(ChangeEvent e, JSpinner spinner) { 
+		if(!spinnerCumpleReqs(spinner)) {
+			spinner.setValue(0);
 			visual.informacionSolicitada.setText("Cuidado: \nLa calificación del equipo no puede ser menor que 0");
 			return;
 		}
@@ -205,4 +220,10 @@ public class InterfazPrincipal {
 		return equipo;
 	}
 	
+	public boolean spinnerCumpleReqs(JSpinner spinner) {
+		if((int) spinner.getValue() < 0 || (int) spinner.getPreviousValue() < -1) {
+			return false;
+		}
+		return true;
+	}
 }
