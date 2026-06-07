@@ -8,8 +8,14 @@ public class BackTracking {
 	Equipo equipoFinal;
 	GestorCompatibilidad gestor;
 	RequerimientoEquipo requerimientos;
-	int iteraciones = 0;
 	private List<Incompatible> incompatibilidades;
+	
+	//para mostrar estadisticas
+	private long llamadasRecursivas = 0;
+	private long casosBase = 0;
+	private long solucionesValidas = 0;
+	private long tiempoInicio;
+	private long tiempoFin;
 
 	public BackTracking(ArrayList<Empleado> empleados, List<Incompatible> incompatibilidades , RequerimientoEquipo requerimientos) {
 		this.empleados = empleados;
@@ -20,20 +26,19 @@ public class BackTracking {
 
 	public void resolver() {
 		this.equipoFinal = new Equipo();
+		tiempoInicio = System.currentTimeMillis();
 		for(Incompatible incom: incompatibilidades) {
 			this.gestor.registrarEmpleadosIncompatibles(incom.getEmpleado1() ,incom.getEmpleado2() ); //arma el grafo para consultar luego si son incompatibles
 		}
 		Equipo equipoActual = new Equipo();
 		creadorDeEquipos(0, equipoActual);
-		this.iteraciones = 0;
-		
+	    tiempoFin = System.currentTimeMillis();	
 	}
 
 	private void creadorDeEquipos(int indice, Equipo equipoActual) {
-		this.iteraciones++;
-
+		this.llamadasRecursivas++;
 		if (equipoActual.cumpleRequerimientos(requerimientos)) {
-
+		    solucionesValidas++;
 			if (equipoActual.getPuntajeTotal() > equipoFinal.getPuntajeTotal()) {
 				equipoFinal =equipoActual.clonar();
 
@@ -41,7 +46,7 @@ public class BackTracking {
 			return;
 		}
 		if (indice == empleados.size()) {
-
+			casosBase++;
 			return;
 		}
 		Empleado empleadoActual = empleados.get(indice);
@@ -73,6 +78,20 @@ public class BackTracking {
 	public Equipo getEquipoFinal() {
 		// TODO Auto-generated method stub
 		return this.equipoFinal;
+	}
+	
+	//getters
+	public long getLlamadasRecursivas() {
+	    return llamadasRecursivas;
+	}
+	public long getCasosBase() {
+	    return casosBase;
+	}
+	public long getSolucionesValidas() {
+	    return solucionesValidas;
+	}
+	public long getTiempoTotal() {
+	    return tiempoFin - tiempoInicio;
 	}
 
 }
