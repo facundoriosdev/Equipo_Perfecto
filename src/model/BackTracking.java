@@ -36,7 +36,7 @@ public class BackTracking {
 	}
 
 	private void creadorDeEquipos(int indice, Equipo equipoActual) {
-		this.llamadasRecursivas++;
+		llamadasRecursivas++;
 		if (equipoActual.cumpleRequerimientos(requerimientos)) {
 		    solucionesValidas++;
 			if (equipoActual.getPuntajeTotal() > equipoFinal.getPuntajeTotal()) {
