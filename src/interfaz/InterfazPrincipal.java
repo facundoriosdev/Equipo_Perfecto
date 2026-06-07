@@ -161,24 +161,33 @@ public class InterfazPrincipal {
 			
 		BackTracking nuevo = new BackTracking(listaEmpleados.empleadosDisponibles, listaEmpleados.incompatibles, requerimientoEquipo );
 		
-		Thread hilo = new Thread(() -> {
-			nuevo.resolver();
-			if (!cumpleRequisitosMinimos(nuevo)) {
-				visual.informacionSolicitada
-						.setText("Advertencia: \nNo se pudo crear un equipo que cumpla con sus requisitos");
-				return;
-			}
-			mejorEquipo = nuevo.getEquipoFinal();
-			for (Empleado e : mejorEquipo.getEmpleados()) {
-				e.setDisponible(false);
-				listaEmpleados.empleadosNoDisponibles.add(e);
-				listaEmpleados.empleadosDisponibles.remove(e);
-			}
-			actualizarDisponibles();
-			agregarNuevoEquipo(mejorEquipo, visual.nombreEquipoNuevo.getText());
-			agregarEquipoLista(mejorEquipo.getNombre());
-		});
+		Thread hilo = new Thread(new ResolverRunnable(nuevo)
+		);
+
 		hilo.start();
+
+		try {
+		    hilo.join();
+		}
+		catch (InterruptedException e) {
+		    e.printStackTrace();
+		}
+		
+		if (!cumpleRequisitosMinimos(nuevo)) {
+			visual.informacionSolicitada
+			.setText("Advertencia: \nNo se pudo crear un equipo que cumpla con sus requisitos");
+			return;
+		}
+		mejorEquipo = nuevo.getEquipoFinal();
+		for (Empleado e : mejorEquipo.getEmpleados()) {
+			e.setDisponible(false);
+			listaEmpleados.empleadosNoDisponibles.add(e);
+			listaEmpleados.empleadosDisponibles.remove(e);
+		}
+		actualizarDisponibles();
+		agregarNuevoEquipo(mejorEquipo, visual.nombreEquipoNuevo.getText());
+		agregarEquipoLista(mejorEquipo.getNombre());
+		
 	}
  
 //	visual.informacionSolicitada.setText("\nnoDisp:" + listaEmpleados.empleadosNoDisponibles);
