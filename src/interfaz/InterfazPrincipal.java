@@ -35,7 +35,7 @@ public class InterfazPrincipal {
 	private DefaultListModel<Empleado> empDis;
 	private DefaultListModel<String> nombreEquipos;
 	private Equipo mejorEquipo;
-	
+
 	
 	
 	public static void main(String[] args) {
@@ -56,7 +56,7 @@ public class InterfazPrincipal {
 		this.visual = visual;
 		
 		nombreEquipos = new DefaultListModel<>();
-		
+		equiposCreados = new HashMap<>(); 
 		listaEmpleados = new ListaEmpleados();
 		listaEmpleados.cargarEmpleados();
 		
@@ -123,7 +123,6 @@ public class InterfazPrincipal {
 			visual.informacionSolicitada.setText("Cuidado: \nSeleccione un equipo para mostrar su información");
 			return;
 		}
-		
 		visual.informacionSolicitada.setText(buscarEquipoSelec(visual.listaEquiposCreados.getSelectedValue()).toString());
 	}
 	
@@ -209,9 +208,8 @@ public class InterfazPrincipal {
 	}
 	
 	public void agregarNuevoEquipo(Equipo equipo, String nombre){
-		equiposCreados = new HashMap<>();
-		equipo.setNombre(nombre);
-		equiposCreados.put(nombre, equipo);
+	    equipo.setNombre(nombre);
+	    equiposCreados.put(nombre, equipo);
 	}
 	
 	public void agregarEquipoLista(String nombre) {
