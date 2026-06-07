@@ -3,38 +3,25 @@ package interfaz;
 import java.awt.EventQueue;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
-import java.util.ArrayList;
 import java.util.HashMap;
-import java.util.LinkedList;
 import java.util.Map;
-
-import javax.swing.JFrame;
-import javax.swing.JComboBox;
-import java.awt.BorderLayout;
-import java.awt.Component;
-
 import javax.swing.JSpinner;
 import javax.swing.DefaultListModel;
-import javax.swing.JButton;
-import javax.swing.JList;
-import javax.swing.JTextField;
-import javax.swing.ListModel;
 import javax.swing.event.ChangeEvent;
 import javax.swing.event.ChangeListener;
 
 import model.*;
 
-import javax.swing.JPanel;
 
 public class InterfazPrincipal {
 	
-	private ConstructorVisual visual;
-	private ListaEmpleados listaEmpleados;
-	private RequerimientoEquipo requerimientoEquipo;
-	private HashMap<String, Equipo> equiposCreados;
-	private DefaultListModel<Empleado> empDis;
-	private DefaultListModel<String> nombreEquipos;
-	private Equipo mejorEquipo;
+	private ConstructorVisual _visual;
+	private ListaEmpleados _listaEmpleados;
+	private RequerimientoEquipo _requerimientoEquipo;
+	private HashMap<String, Equipo> _equiposCreados;
+	private DefaultListModel<Empleado> _empDis;
+	private DefaultListModel<String> _nombreEquipos;
+	private Equipo _mejorEquipo;
 
 	
 	
@@ -44,7 +31,7 @@ public class InterfazPrincipal {
 				try {
 					ConstructorVisual mirar = new ConstructorVisual();
 					InterfazPrincipal window = new InterfazPrincipal(mirar);
-					window.visual.frame.setVisible(true);
+					window._visual.frame.setVisible(true);
 				} catch (Exception e) {
 					e.printStackTrace();
 				}
@@ -53,12 +40,12 @@ public class InterfazPrincipal {
 	}
 
 	public InterfazPrincipal(ConstructorVisual visual) {
-		this.visual = visual;
+		this._visual = visual;
 		
-		nombreEquipos = new DefaultListModel<>();
-		equiposCreados = new HashMap<>(); 
-		listaEmpleados = new ListaEmpleados();
-		listaEmpleados.cargarEmpleados();
+		_nombreEquipos = new DefaultListModel<>();
+		_equiposCreados = new HashMap<>(); 
+		_listaEmpleados = new ListaEmpleados();
+		_listaEmpleados.cargarEmpleados();
 		
 		gestorEventos();
 	}
@@ -68,43 +55,43 @@ public class InterfazPrincipal {
 		actualizarDisponibles();
 		
 		
-		visual.reqMinimoEquipo.addChangeListener(new ChangeListener() {
+		_visual.reqMinimoEquipo.addChangeListener(new ChangeListener() {
 			public void stateChanged(ChangeEvent e) {
-				spinnerValor(e, visual.reqMinimoEquipo); 	
+				spinnerValor(e, _visual.reqMinimoEquipo); 	
 			}
 		}); 	
 		
-		visual.cantidadArquitectos.addChangeListener(new ChangeListener() {
+		_visual.cantidadArquitectos.addChangeListener(new ChangeListener() {
 			public void stateChanged(ChangeEvent e) {
-				spinnerValor(e, visual.cantidadArquitectos); 	
+				spinnerValor(e, _visual.cantidadArquitectos); 	
 			}
 		}); 
 		
-		visual.cantidadProgramadores.addChangeListener(new ChangeListener() {
+		_visual.cantidadProgramadores.addChangeListener(new ChangeListener() {
 			public void stateChanged(ChangeEvent e) {
-				spinnerValor(e, visual.cantidadProgramadores); 	
+				spinnerValor(e, _visual.cantidadProgramadores); 	
 			}
 		}); 
 		
-		visual.cantidadTesters.addChangeListener(new ChangeListener() {
+		_visual.cantidadTesters.addChangeListener(new ChangeListener() {
 			public void stateChanged(ChangeEvent e) {
-				spinnerValor(e, visual.cantidadTesters); 	
+				spinnerValor(e, _visual.cantidadTesters); 	
 			}
 		}); 
 		
-		visual.crearEquipo.addActionListener(new ActionListener() {
+		_visual.crearEquipo.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				creacionEquipo();
 			}
 		});
 		
-		visual.detallesEmpleado.addActionListener(new ActionListener() {
+		_visual.detallesEmpleado.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				detallesEmpDisp();
 			}
 		});
 		
-		visual.detallesEquipo.addActionListener(new ActionListener() {
+		_visual.detallesEquipo.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				detallesEquipoSelec();
 			}
@@ -119,46 +106,46 @@ public class InterfazPrincipal {
 	//////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 	
 	public void detallesEquipoSelec() {
-		if(visual.listaEquiposCreados.getSelectedValue() == null) {
-			visual.informacionSolicitada.setText("Cuidado: \nSeleccione un equipo para mostrar su información");
+		if(_visual.listaEquiposCreados.getSelectedValue() == null) {
+			_visual.informacionSolicitada.setText("Cuidado: \nSeleccione un equipo para mostrar su información");
 			return;
 		}
-		visual.informacionSolicitada.setText(buscarEquipoSelec(visual.listaEquiposCreados.getSelectedValue()).toString());
+		_visual.informacionSolicitada.setText(buscarEquipoSelec(_visual.listaEquiposCreados.getSelectedValue()).toString());
 	}
 	
 	public void detallesEmpDisp() {
 		
-		if(visual.empleadosDisponibles.getSelectedValue() == null) {
-			visual.informacionSolicitada.setText("Cuidado: \nSeleccione a un empleado para mostrar su información");
+		if(_visual.empleadosDisponibles.getSelectedValue() == null) {
+			_visual.informacionSolicitada.setText("Cuidado: \nSeleccione a un empleado para mostrar su información");
 		}
 		else {
-		visual.informacionSolicitada.setText("Nombre: " + visual.empleadosDisponibles.getSelectedValue().getNombre()
-				+ "\nRol: " + visual.empleadosDisponibles.getSelectedValue().getRol()
-				+ "\nCalificación: " + visual.empleadosDisponibles.getSelectedValue().getCalificacion()
-				+ "\nDisponibilidad: " + visual.empleadosDisponibles.getSelectedValue().getDisponible());
+		_visual.informacionSolicitada.setText("Nombre: " + _visual.empleadosDisponibles.getSelectedValue().getNombre()
+				+ "\nRol: " + _visual.empleadosDisponibles.getSelectedValue().getRol()
+				+ "\nCalificación: " + _visual.empleadosDisponibles.getSelectedValue().getCalificacion()
+				+ "\nDisponibilidad: " + _visual.empleadosDisponibles.getSelectedValue().getDisponible());
 		}
 	}
 	
 	
 	public void creacionEquipo() {
 		
-		if(visual.nombreEquipoNuevo.getText().length() == 0) {
-			visual.informacionSolicitada.setText("Cuidado: \nEl nombre del equipo debe tener como minimo un caracter");
+		if(_visual.nombreEquipoNuevo.getText().length() == 0) {
+			_visual.informacionSolicitada.setText("Cuidado: \nEl nombre del equipo debe tener como minimo un caracter");
 			return;
 		}
-		else if((int)visual.cantidadArquitectos.getValue() < 1 && (int) visual.cantidadProgramadores.getValue() < 1 && 
-				(int) visual.cantidadTesters.getValue() < 1 && !visual.liderEquipoBoton.isSelected()) {
-			visual.informacionSolicitada.setText("Cuidado: \nEl equipo necesita un miembro como minimo");
+		else if((int)_visual.cantidadArquitectos.getValue() < 1 && (int) _visual.cantidadProgramadores.getValue() < 1 && 
+				(int) _visual.cantidadTesters.getValue() < 1 && !_visual.liderEquipoBoton.isSelected()) {
+			_visual.informacionSolicitada.setText("Cuidado: \nEl equipo necesita un miembro como minimo");
 			return;
 		}
 		Map<Roles, Integer> rolReq = new HashMap<Roles, Integer>(); 
-		rolReq.put(Roles.LIDER_PROYECTO, visual.liderEquipoBoton.isSelected() ? 1:0);
-		rolReq.put(Roles.ARQUITECTO, (int) visual.cantidadArquitectos.getValue());
-		rolReq.put(Roles.PROGRAMADOR, (int) visual.cantidadProgramadores.getValue());
-		rolReq.put(Roles.TESTER, (int) visual.cantidadTesters.getValue());
-		requerimientoEquipo = new RequerimientoEquipo(rolReq);
+		rolReq.put(Roles.LIDER_PROYECTO, _visual.liderEquipoBoton.isSelected() ? 1:0);
+		rolReq.put(Roles.ARQUITECTO, (int) _visual.cantidadArquitectos.getValue());
+		rolReq.put(Roles.PROGRAMADOR, (int) _visual.cantidadProgramadores.getValue());
+		rolReq.put(Roles.TESTER, (int) _visual.cantidadTesters.getValue());
+		_requerimientoEquipo = new RequerimientoEquipo(rolReq);
 			
-		BackTracking nuevo = new BackTracking(listaEmpleados.empleadosDisponibles, listaEmpleados.incompatibles, requerimientoEquipo );
+		BackTracking nuevo = new BackTracking(_listaEmpleados.empleadosDisponibles, _listaEmpleados.incompatibles, _requerimientoEquipo );
 		
 		Thread hilo = new Thread(new ResolverRunnable(nuevo)
 		);
@@ -173,19 +160,19 @@ public class InterfazPrincipal {
 		}
 		
 		if (!cumpleRequisitosMinimos(nuevo)) {
-			visual.informacionSolicitada
+			_visual.informacionSolicitada
 			.setText("Advertencia: \nNo se pudo crear un equipo que cumpla con sus requisitos");
 			return;
 		}
-		mejorEquipo = nuevo.getEquipoFinal();
-		for (Empleado e : mejorEquipo.getEmpleados()) {
+		_mejorEquipo = nuevo.getEquipoFinal();
+		for (Empleado e : _mejorEquipo.getEmpleados()) {
 			e.setDisponible(false);
-			listaEmpleados.empleadosNoDisponibles.add(e);
-			listaEmpleados.empleadosDisponibles.remove(e);
+			_listaEmpleados.empleadosNoDisponibles.add(e);
+			_listaEmpleados.empleadosDisponibles.remove(e);
 		}
 		actualizarDisponibles();
-		agregarNuevoEquipo(mejorEquipo, visual.nombreEquipoNuevo.getText());
-		agregarEquipoLista(mejorEquipo.getNombre());
+		agregarNuevoEquipo(_mejorEquipo, _visual.nombreEquipoNuevo.getText());
+		agregarEquipoLista(_mejorEquipo.getNombre());
 		
 	}
  
@@ -193,32 +180,32 @@ public class InterfazPrincipal {
 	public void spinnerValor(ChangeEvent e, JSpinner spinner) { 
 		if(!spinnerCumpleReqs(spinner)) {
 			spinner.setValue(0);
-			visual.informacionSolicitada.setText("Cuidado: \nLa calificación del equipo no puede ser menor que 0");
+			_visual.informacionSolicitada.setText("Cuidado: \nNo se puede establecer un valor negativo");
 			return;
 		}
 	}
 	
 	public void actualizarDisponibles() {
-		empDis = new DefaultListModel<>();
-		for(Empleado e : listaEmpleados.empleadosDisponibles) {
+		_empDis = new DefaultListModel<>();
+		for(Empleado e : _listaEmpleados.empleadosDisponibles) {
 			if(e.getDisponible())
-				empDis.addElement(e);
+				_empDis.addElement(e);
 		}
-		visual.empleadosDisponibles.setModel(empDis);
+		_visual.empleadosDisponibles.setModel(_empDis);
 	}
 	
 	public void agregarNuevoEquipo(Equipo equipo, String nombre){
 	    equipo.setNombre(nombre);
-	    equiposCreados.put(nombre, equipo);
+	    _equiposCreados.put(nombre, equipo);
 	}
 	
 	public void agregarEquipoLista(String nombre) {
-		nombreEquipos.addElement(nombre);
-		visual.listaEquiposCreados.setModel(nombreEquipos);
+		_nombreEquipos.addElement(nombre);
+		_visual.listaEquiposCreados.setModel(_nombreEquipos);
 	}
 	
 	public boolean cumpleRequisitosMinimos(BackTracking equipo) {
-		if(equipo.getEquipoFinal().getPuntajeTotal() < (int)visual.reqMinimoEquipo.getValue()) {
+		if(equipo.getEquipoFinal().getPuntajeTotal() < (int)_visual.reqMinimoEquipo.getValue()) {
 			return false;
 		}
 		return true;
@@ -226,7 +213,7 @@ public class InterfazPrincipal {
 	
 	public Equipo buscarEquipoSelec(String nombre) {
 		Equipo equipo = new Equipo();
-		equipo = equiposCreados.get(nombre);
+		equipo = _equiposCreados.get(nombre);
 		return equipo;
 	}
 	
