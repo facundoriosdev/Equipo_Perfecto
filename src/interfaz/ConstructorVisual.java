@@ -1,21 +1,17 @@
 package interfaz;
 
-import java.util.ArrayList;
 
-import javax.swing.DefaultListModel;
+
+
 import javax.swing.JButton;
-import javax.swing.JComboBox;
+
 import javax.swing.JFrame;
 import javax.swing.JList;
 import javax.swing.JPanel;
 import javax.swing.JSpinner;
 import javax.swing.JTextField;
-import javax.swing.JLabel;
-import javax.swing.JInternalFrame;
-import javax.swing.SwingConstants;
-import java.awt.Insets;
-import javax.swing.border.BevelBorder;
-import javax.swing.border.CompoundBorder;
+
+
 import javax.swing.border.LineBorder;
 import java.awt.Color;
 import javax.swing.border.TitledBorder;
@@ -25,8 +21,8 @@ import model.*;
 import javax.swing.JTextArea;
 import javax.swing.JRadioButton;
 import javax.swing.ListSelectionModel;
-import javax.swing.JScrollBar;
-import java.awt.Scrollbar;
+
+
 import javax.swing.JScrollPane;
 
 public class ConstructorVisual {

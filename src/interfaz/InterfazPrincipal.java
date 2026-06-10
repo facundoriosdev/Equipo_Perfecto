@@ -145,7 +145,7 @@ public class InterfazPrincipal {
 		rolReq.put(Roles.TESTER, (int) _visual.cantidadTesters.getValue());
 		_requerimientoEquipo = new RequerimientoEquipo(rolReq);
 			
-		BackTracking nuevo = new BackTracking(_listaEmpleados.empleadosDisponibles, _listaEmpleados.incompatibles, _requerimientoEquipo );
+		BackTracking nuevo = new BackTracking(_listaEmpleados.getEmpleadosDisponibles(), _listaEmpleados.getIncompatibles(), _requerimientoEquipo );
 		
 		Thread hilo = new Thread(new ResolverRunnable(nuevo)
 		);
@@ -167,8 +167,8 @@ public class InterfazPrincipal {
 		_mejorEquipo = nuevo.getEquipoFinal();
 		for (Empleado e : _mejorEquipo.getEmpleados()) {
 			e.setDisponible(false);
-			_listaEmpleados.empleadosNoDisponibles.add(e);
-			_listaEmpleados.empleadosDisponibles.remove(e);
+			_listaEmpleados.getEmpleadosNoDisponibles().add(e);
+			_listaEmpleados.getEmpleadosDisponibles().remove(e);
 		}
 		actualizarDisponibles();
 		agregarNuevoEquipo(_mejorEquipo, _visual.nombreEquipoNuevo.getText());
@@ -187,7 +187,7 @@ public class InterfazPrincipal {
 	
 	public void actualizarDisponibles() {
 		_empDis = new DefaultListModel<>();
-		for(Empleado e : _listaEmpleados.empleadosDisponibles) {
+		for(Empleado e : _listaEmpleados.getEmpleadosDisponibles()) {
 			if(e.getDisponible())
 				_empDis.addElement(e);
 		}

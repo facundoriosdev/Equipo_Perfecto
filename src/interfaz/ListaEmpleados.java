@@ -5,14 +5,15 @@ import model.*;
 
 public class ListaEmpleados {
 	
-	ArrayList<Empleado> empleadosDisponibles, empleadosNoDisponibles;
-	ArrayList<Incompatible> incompatibles;
+	public ArrayList<Empleado> empleadosDisponibles;
+	private ArrayList<Empleado> empleadosNoDisponibles;
+	private ArrayList<Incompatible> incompatibles;
 	ArrayList<Equipo> equiposLista;
 	
 	public void cargarEmpleados(){
 		
-		empleadosNoDisponibles = new ArrayList<Empleado>();
-		empleadosDisponibles = new ArrayList<Empleado>();
+		setEmpleadosNoDisponibles(new ArrayList<Empleado>());
+		setEmpleadosDisponibles(new ArrayList<Empleado>());
 
 		// LÍDERES
 		Empleado l1 = new Empleado("Aitana", Roles.LIDER_PROYECTO, 5);
@@ -38,34 +39,58 @@ public class ListaEmpleados {
 		Empleado t4 = new Empleado("Laura", Roles.TESTER, 2);
 		
 		// LÍDERES
-		empleadosDisponibles.add(l1);
-		empleadosDisponibles.add(l2);
+		getEmpleadosDisponibles().add(l1);
+		getEmpleadosDisponibles().add(l2);
 		// ARQUITECTOS
-		empleadosDisponibles.add(a1);
-		empleadosDisponibles.add(a2);
-		empleadosDisponibles.add(a3);
-		empleadosDisponibles.add(a4);
+		getEmpleadosDisponibles().add(a1);
+		getEmpleadosDisponibles().add(a2);
+		getEmpleadosDisponibles().add(a3);
+		getEmpleadosDisponibles().add(a4);
 		// PROGRAMADORES
-		empleadosDisponibles.add(p1);
-		empleadosDisponibles.add(p2);
-		empleadosDisponibles.add(p3);
-		empleadosDisponibles.add(p4);
-		empleadosDisponibles.add(p5);
-		empleadosDisponibles.add(p6);
-		empleadosDisponibles.add(p7);
-		empleadosDisponibles.add(p8);
+		getEmpleadosDisponibles().add(p1);
+		getEmpleadosDisponibles().add(p2);
+		getEmpleadosDisponibles().add(p3);
+		getEmpleadosDisponibles().add(p4);
+		getEmpleadosDisponibles().add(p5);
+		getEmpleadosDisponibles().add(p6);
+		getEmpleadosDisponibles().add(p7);
+		getEmpleadosDisponibles().add(p8);
 		// TESTERS
-		empleadosDisponibles.add(t1);
-		empleadosDisponibles.add(t2);
-		empleadosDisponibles.add(t3);
-		empleadosDisponibles.add(t4);
+		getEmpleadosDisponibles().add(t1);
+		getEmpleadosDisponibles().add(t2);
+		getEmpleadosDisponibles().add(t3);
+		getEmpleadosDisponibles().add(t4);
 	
-		incompatibles = new ArrayList<Incompatible>();
-		incompatibles.add(new Incompatible(t1, p5));
-		incompatibles.add(new Incompatible(a1, l2));
-		incompatibles.add(new Incompatible(p6, p7));
-		incompatibles.add(new Incompatible(p1, a3));
-		incompatibles.add(new Incompatible(t4, l1));
+		setIncompatibles(new ArrayList<Incompatible>());
+		getIncompatibles().add(new Incompatible(t1, p5));
+		getIncompatibles().add(new Incompatible(a1, l2));
+		getIncompatibles().add(new Incompatible(p6, p7));
+		getIncompatibles().add(new Incompatible(p1, a3));
+		getIncompatibles().add(new Incompatible(t4, l1));
+	}
+
+	public ArrayList<Empleado> getEmpleadosDisponibles() {
+		return empleadosDisponibles;
+	}
+
+	public void setEmpleadosDisponibles(ArrayList<Empleado> empleadosDisponibles) {
+		this.empleadosDisponibles = empleadosDisponibles;
+	}
+
+	public ArrayList<Empleado> getEmpleadosNoDisponibles() {
+		return empleadosNoDisponibles;
+	}
+
+	public void setEmpleadosNoDisponibles(ArrayList<Empleado> empleadosNoDisponibles) {
+		this.empleadosNoDisponibles = empleadosNoDisponibles;
+	}
+
+	public ArrayList<Incompatible> getIncompatibles() {
+		return incompatibles;
+	}
+
+	public void setIncompatibles(ArrayList<Incompatible> incompatibles) {
+		this.incompatibles = incompatibles;
 	}
 }
 
