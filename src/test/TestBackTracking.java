@@ -1,6 +1,8 @@
 package test;
 
 import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertNull;
+import static org.junit.Assert.assertTrue;
 
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -62,6 +64,12 @@ public class TestBackTracking {
 		BackTracking back = new BackTracking(empleados, incompatibles, req);
 		back.resolver();
 		assertEquals(20, back.getEquipoFinal().getPuntajeTotal());
+	}
+	
+
+	@Test
+	public void sinEsValidoAgregar() {
+		assertTrue();
 	}
 
 }
