@@ -25,7 +25,7 @@ import presenter.MenuPresenter;
 			private MenuPresenter presenter;
 			private JFrame frame;
 			private JTextField nombreEquipoNuevo;
-			private JSpinner reqMinimoEquipo, cantidadProgramadores, cantidadTesters, cantidadArquitectos;
+			private JSpinner reqMinimoEquipo, cantidadProgramadores, cantidadTesters, cantidadArquitectos, cantidadLideres;
 			private JButton crearEquipo, detallesEmpleado, detallesEquipo;
 			private JList<Empleado> empleadosDisponibles;
 			private JTextArea informacionSolicitada;
@@ -38,7 +38,6 @@ import presenter.MenuPresenter;
 			private JTextField txtCalificacinMinima;
 			private JButton btnAgregarEmpleado;
 			private JTextField Jtext_lideres;
-			private JSpinner cantidadLideres;
 			private JScrollPane scrollPane_3;
 			private JButton btneliminarIncompatible;
 			private JButton detallesIncompatible;
@@ -75,7 +74,7 @@ import presenter.MenuPresenter;
 				listaEquiposCreados = new JList<>();
 				scrollPane_1.setViewportView(listaEquiposCreados);
 				
-				detallesEquipo = new JButton("Mostrar detalles del equipo");
+				detallesEquipo = new JButton("Detalles del equipo");
 				detallesEquipo.setBounds(10, 241, 178, 45);
 				panelDetalles.add(detallesEquipo);
 				detallesEquipo.addActionListener(e -> presenter.detallesEquipoSelec());
@@ -93,7 +92,7 @@ import presenter.MenuPresenter;
 				
 				
 				
-				detallesEmpleado = new JButton("Mostrar Detalles");
+				detallesEmpleado = new JButton("Detalles");
 				detallesEmpleado.setBounds(218, 266, 126, 20);
 				panelDetalles.add(detallesEmpleado);
 				detallesEmpleado.addActionListener(e -> presenter.detallesEmpDisp());
@@ -114,9 +113,9 @@ import presenter.MenuPresenter;
 				btneliminarIncompatible.addActionListener(e -> presenter.eliminarIncompatible());
 				
 				
-				detallesIncompatible = new JButton("Mostrar Detalles");
+				detallesIncompatible = new JButton("Detalles");
 				detallesIncompatible.addActionListener(e -> presenter.detallesIncompatible());
-				detallesIncompatible.setBounds(384, 266, 122, 20);
+				detallesIncompatible.setBounds(380, 266, 126, 20);
 				panelDetalles.add(detallesIncompatible);
 				btneliminarEmpleado.addActionListener(e -> presenter.eliminarEmpleado());
 				
@@ -226,8 +225,8 @@ import presenter.MenuPresenter;
 				cantidadLideres.setBounds(120, 105, 36, 20);
 				panelCreacion.add(cantidadLideres);
 				
-				btnAgregarIncompatiblidad = new JButton("Agregar Incompatibilidad");
-				btnAgregarIncompatiblidad.setFont(new Font("Tahoma", Font.PLAIN, 10));
+				btnAgregarIncompatiblidad = new JButton("Agregar\r\n Incompatibilidad");
+				btnAgregarIncompatiblidad.setFont(new Font("Tahoma", Font.PLAIN, 9));
 				btnAgregarIncompatiblidad.setBounds(10, 320, 146, 52);
 				panelCreacion.add(btnAgregarIncompatiblidad);
 				btnAgregarIncompatiblidad.addActionListener(e -> presenter.abrirVentanaAgregarIncompatibilidad());
@@ -254,7 +253,7 @@ import presenter.MenuPresenter;
 			}
 			//metodos getters
 			public String getNombreEquipoNuevo() { return nombreEquipoNuevo.getText(); }
-			public int getCantidadArquitectos() { return (int) cantidadArquitectos.getValue(); }
+			public int getCantidadArquitectos() { return (int) cantidadArquitectos.getValue();}
 			public int getCantidadProgramadores() { return (int) cantidadProgramadores.getValue(); }
 			public int getCantidadTesters() { return (int) cantidadTesters.getValue(); }
 			public int getReqMinimoEquipo() { return (int) reqMinimoEquipo.getValue(); }

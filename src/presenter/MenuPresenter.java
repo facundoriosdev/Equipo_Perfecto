@@ -90,6 +90,10 @@ public class MenuPresenter {
 			_view.setInformacionText("Cuidado: \nEl nombre del equipo no puede estar vacío");
 			return;
 		}
+		if (_view.getCantidadArquitectos()<0 || _view.getCantidadLideres()<0 || _view.getCantidadProgramadores()<0 || _view.getCantidadTesters()<0 || _view.getReqMinimoEquipo()<0) {
+			_view.setInformacionText("Por favor, ingrese valores mayores o iguales a 0");
+			return;
+		}
 		if (_equiposCreados.containsKey(nombreEquipo)) {
 			_view.setInformacionText("Cuidado: \nYa existe un equipo llamado así.\nPor favor, cambie el nombre en el cuadro de texto.");
 			return;
