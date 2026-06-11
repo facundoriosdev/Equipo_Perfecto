@@ -51,7 +51,7 @@ public class BackTracking extends SwingWorker <Equipo, Object> {
 
 	private void creadorDeEquipos(int indice, Equipo equipoActual) {
 		llamadasRecursivas++;
-		if (llamadasRecursivas % 500 == 0) { // Monitoreamos cada 500 llamadas para no saturar la UI
+		if (llamadasRecursivas % 500 == 0) { 
 			reportarProgreso();
 		}
 		if (equipoActual.cumpleRequerimientos(requerimientos)) {
