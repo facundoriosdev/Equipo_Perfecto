@@ -67,9 +67,5 @@ public class TestBackTracking {
 	}
 	
 
-	@Test
-	public void sinEsValidoAgregar() {
-		assertTrue();
-	}
 
 }
