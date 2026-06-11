@@ -8,6 +8,7 @@ import javax.swing.JButton;
 import javax.swing.JFrame;
 import javax.swing.JList;
 import javax.swing.JPanel;
+import javax.swing.JProgressBar;
 import javax.swing.JSpinner;
 import javax.swing.JTextField;
 
@@ -37,7 +38,7 @@ public class ConstructorVisual {
 	JList<String> listaEquiposCreados;
 	JList<Empleado> empleadosDisponibles;
 	JRadioButton liderEquipoBoton;
-	
+	JProgressBar barraProgreso;
 	
 	private JTextField txtArquitectos;
 	private JTextField txtProgramadores;
@@ -198,5 +199,14 @@ public class ConstructorVisual {
 		informacionSolicitada.setFocusable(false);
 		informacionSolicitada.setEditable(false);
 		
+		barraProgreso = new JProgressBar();
+		barraProgreso.setBounds(10, 295, 516, 20);
+		barraProgreso.setMinimum(0);
+		barraProgreso.setMaximum(100);
+		frame.getContentPane().add(barraProgreso);
+	}
+	
+	public void mostrarAvance(int porcentaje) {
+	    barraProgreso.setValue(porcentaje);
 	}
 }

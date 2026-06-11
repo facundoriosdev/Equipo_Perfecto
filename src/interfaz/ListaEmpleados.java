@@ -6,7 +6,7 @@ import model.*;
 public class ListaEmpleados {
 	
 	public ArrayList<Empleado> empleadosDisponibles;
-	private ArrayList<Empleado> empleadosNoDisponibles;
+	public ArrayList<Empleado> empleadosNoDisponibles;
 	private ArrayList<Incompatible> incompatibles;
 	ArrayList<Equipo> equiposLista;
 	

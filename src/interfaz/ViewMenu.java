@@ -17,6 +17,7 @@ import javax.swing.border.LineBorder;
 import javax.swing.border.TitledBorder;
 
 import model.Empleado;
+import javax.swing.JProgressBar;
 
 	public class ViewMenu {
 		
@@ -34,6 +35,7 @@ import model.Empleado;
 			private JTextField txtNombreDeEquipo;
 			private JTextField txtCalificacinMinima;
 			private JButton btnAgregarEmpleado;
+			private JProgressBar progressBar;
 			public ViewMenu() {
 				initialize();
 			}
@@ -178,6 +180,10 @@ import model.Empleado;
 				scrollPane_2.setBounds(10, 324, 516, 232);
 				frame.getContentPane().add(scrollPane_2);
 				
+				progressBar = new JProgressBar();
+				progressBar.setBounds(20, 295, 506, 24);
+				frame.getContentPane().add(progressBar);
+				
 				/////////////////////////////////////////////////////////////////////////////////////////////////////////////
 				/////////////////////////////////////////////////////////////////////////////////////////////////////////////
 				
@@ -186,6 +192,16 @@ import model.Empleado;
 				informacionSolicitada.setFocusable(false);
 				informacionSolicitada.setEditable(false);
 				
+			}
+			public void mostrarAvance(int porcentaje) {
+			    progressBar.setValue(porcentaje);
+			}
+			public void iniciarBarra() {
+			    progressBar.setValue(0);
+			}
+
+			public void terminarBarra() {
+			    progressBar.setValue(100);
 			}
 			//metodos getters
 			public String getNombreEquipoNuevo() { return nombreEquipoNuevo.getText(); }

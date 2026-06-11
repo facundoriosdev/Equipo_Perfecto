@@ -144,36 +144,36 @@ public class InterfazPrincipal {
 		rolReq.put(Roles.PROGRAMADOR, (int) _visual.cantidadProgramadores.getValue());
 		rolReq.put(Roles.TESTER, (int) _visual.cantidadTesters.getValue());
 		_requerimientoEquipo = new RequerimientoEquipo(rolReq);
-			
-		BackTracking nuevo = new BackTracking(_listaEmpleados.getEmpleadosDisponibles(), _listaEmpleados.getIncompatibles(), _requerimientoEquipo );
 		
-		Thread hilo = new Thread(new ResolverRunnable(nuevo)
+		BackTracking nuevo = new BackTracking(_listaEmpleados.getEmpleadosDisponibles(),_listaEmpleados.getIncompatibles(),_requerimientoEquipo, this, _visual.nombreEquipoNuevo.getText()
 		);
-
-		hilo.start();
-
-		try {
-		    hilo.join();
-		}
-		catch (InterruptedException e) {
-		    e.printStackTrace();
-		}
+		nuevo.addPropertyChangeListener(evt -> {
+			if ("progress".equals(evt.getPropertyName())) {_visual.mostrarAvance((Integer) evt.getNewValue());
+			}
+		});
 		
-		if (!cumpleRequisitosMinimos(nuevo)) {
-			_visual.informacionSolicitada
-			.setText("Advertencia: \nNo se pudo crear un equipo que cumpla con sus requisitos");
-			return;
-		}
-		_mejorEquipo = nuevo.getEquipoFinal();
-		for (Empleado e : _mejorEquipo.getEmpleados()) {
-			e.setDisponible(false);
-			_listaEmpleados.getEmpleadosNoDisponibles().add(e);
-			_listaEmpleados.getEmpleadosDisponibles().remove(e);
-		}
-		actualizarDisponibles();
-		agregarNuevoEquipo(_mejorEquipo, _visual.nombreEquipoNuevo.getText());
-		agregarEquipoLista(_mejorEquipo.getNombre());
+		nuevo.execute();
 		
+	}
+	
+	public void equipoCreado(Equipo equipo, String nombre) {
+	    if (equipo == null) {
+	    	_visual.informacionSolicitada.setText("No se pudo generar un equipo.");
+	    	return;
+	    }
+	    if (equipo.getPuntajeTotal() < (int)_visual.reqMinimoEquipo.getValue()) {
+	        _visual.informacionSolicitada.setText("Advertencia:\nNo se pudo crear un equipo que cumpla los requisitos");
+	        return;
+	    }
+	    _mejorEquipo = equipo;
+	    for (Empleado e : _mejorEquipo.getEmpleados()) {
+	        e.setDisponible(false);
+	        _listaEmpleados.empleadosNoDisponibles.add(e);
+	        _listaEmpleados.empleadosDisponibles.remove(e);
+	    }
+	    actualizarDisponibles();
+	    agregarNuevoEquipo(_mejorEquipo, nombre);
+	    agregarEquipoLista(nombre);
 	}
  
 //	visual.informacionSolicitada.setText("\nnoDisp:" + listaEmpleados.empleadosNoDisponibles);
