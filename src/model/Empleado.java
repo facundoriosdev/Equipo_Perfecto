@@ -15,7 +15,7 @@ public class Empleado {
 		this.disponible = true;
 	}
 	
-	public boolean getDisponible() {
+	public boolean getDisponible() {	
 		return disponible;
 	}
 	public void setDisponible(boolean e) {

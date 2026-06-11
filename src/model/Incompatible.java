@@ -16,5 +16,9 @@ public class Incompatible {
 	public Empleado getEmpleado2() {
 		return empleado2;
 	}
+	@Override
+	public String toString() {
+		return empleado1.getNombre() + " / " + empleado2.getNombre();
+	}
 
 }
